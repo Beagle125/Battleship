@@ -7,6 +7,8 @@ const Tile = class {
 
   markHit() {
     this.#isHit = true;
+
+    if (this.#referenceShip) this.referenceShip.hit();
   }
 
   get isShip() {
@@ -23,6 +25,7 @@ const Tile = class {
 
   set referenceShip(ship) {
     this.#referenceShip = ship;
+    this.#isShip = true;
   }
 };
 
@@ -49,4 +52,44 @@ const Ship = class {
   }
 };
 
-export { Tile, Ship };
+const Gameboard = class {
+  #ships = new Array(); // array of ships
+  #grid = new Array(); // 2D array of tiles
+
+  constructor() {
+    // populate the grid with empty tiles
+    for (let i = 0; i < 10; i++) {
+      this.#grid.push(Array.from({ length: 10 }, () => new Tile()));
+    }
+  }
+
+  receiveAttack(row, col) {
+    const min = 0,
+      max = 9;
+
+    if (row < min || row > max || col < min || col > max)
+      throw new Error("Out of bounds coordinates");
+
+    const currTile = this.#grid[row][col];
+    currTile.markHit();
+  }
+
+  allShipsSunk() {
+    return this.#ships.every((ship) => ship.sunk === true);
+  }
+
+  addShip(ship, coords) {
+    this.#ships.push(ship);
+
+    for (const pair of coords) {
+      const currTile = this.#grid[pair[0]][pair[1]];
+      currTile.referenceShip = ship;
+    }
+  }
+
+  get grid() {
+    return this.#grid;
+  }
+};
+
+export { Tile, Ship, Gameboard };
