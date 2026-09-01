@@ -1,5 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Michroma&display=swap");
 
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 html,
 body {
   /*Color Pallete*/
@@ -72,6 +81,22 @@ button:hover {
   transform: scale(1.1);
 }
 
+/*Loading styles*/
+.loadingMessage {
+  color: var(--utilityWhite);
+  font-family: var(--mainFont);
+  font-size: var(--bodySize);
+}
+
+.spinningIcon {
+  animation: spin 2s linear infinite;
+  border: 8px solid var(--backgroundBlue);
+  border-top: 8px solid var(--utilityWhite);
+  border-bottom: 8px solid var(--utilityWhite);
+  border-radius: 50%;
+  height: 60px;
+  width: 60px;
+}
 /*Start page styles*/
 #mainContainer {
   display: flex;

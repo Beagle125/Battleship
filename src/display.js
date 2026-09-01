@@ -3,12 +3,16 @@ import logo from "../static/logo.svg";
 import miss from "../static/miss.svg";
 import placement from "../static/placement.svg";
 
+import { delay, renderLoad } from "./controller.js";
+
 const Button = (type, text, action) => {
   const newButton = document.createElement("button");
   newButton.classList.add(type);
   newButton.textContent = text;
 
-  return { newButton, action };
+  newButton.addEventListener("click", action);
+
+  return { newButton };
 };
 
 const renderStart = (header, mainContainer) => {
@@ -21,12 +25,8 @@ const renderStart = (header, mainContainer) => {
   header.appendChild(logoImg);
 
   mainContainer.classList.replace("gameplay", "start");
-  const twoPlayerButton = Button("simpleBtn", "2 player", () => {
-    console.log("2 player");
-  });
-  const computerButton = Button("simpleBtn", "computer", () => {
-    console.log("computer");
-  });
+  const twoPlayerButton = Button("simpleBtn", "2 player", renderLoad);
+  const computerButton = Button("simpleBtn", "computer", renderLoad);
 
   mainContainer.appendChild(twoPlayerButton.newButton);
   mainContainer.appendChild(computerButton.newButton);
