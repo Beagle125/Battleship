@@ -1,5 +1,20 @@
 @import url("https://fonts.googleapis.com/css2?family=Michroma&display=swap");
 
-h1 {
-  font-family: Michroma;
+html,
+body {
+  /*Color Pallete*/
+  --backgroundBlue: #3a5763;
+  --shipRed: #c75959;
+  --safeBlue: #6397ac;
+  --utilityWhite: #d9d9d9;
+
+  /*Fonts*/
+  --mainFont: Michroma;
+
+  background-color: var(--backgroundBlue);
+  box-sizing: border-box;
+  height: 100vh;
+  margin: 0;
+  width: 100vw;
+  overflow-x: hidden;
 }
