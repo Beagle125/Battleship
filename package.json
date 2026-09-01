@@ -1,0 +1,36 @@
+{
+  "name": "project-todolist",
+  "version": "1.0.0",
+  "description": "todo",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "webpack --config webpack.prod.js",
+    "dev": "webpack serve --config webpack.dev.js",
+    "deploy": "gh-pages -d dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Beagle125/Project-ToDoList.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/Beagle125/Project-ToDoList/issues"
+  },
+  "homepage": "https://github.com/Beagle125/Project-ToDoList#readme",
+  "devDependencies": {
+    "@babel/preset-env": "^7.29.7",
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.8.1",
+    "gh-pages": "^6.3.0",
+    "globals": "^17.10.0",
+    "jest": "^30.4.2",
+    "prettier": "3.9.6",
+    "webpack": "^5.106.2",
+    "webpack-cli": "^7.0.2",
+    "webpack-merge": "^6.0.1"
+  }
+}
