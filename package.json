@@ -1,5 +1,5 @@
 {
-  "name": "project-todolist",
+  "name": "battleship",
   "version": "1.0.0",
   "description": "todo",
   "main": "index.js",
@@ -11,26 +11,33 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Beagle125/Project-ToDoList.git"
+    "url": "git+https://github.com/Beagle125/Battleship.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "module",
   "bugs": {
-    "url": "https://github.com/Beagle125/Project-ToDoList/issues"
+    "url": "https://github.com/Beagle125/Battleship/issues"
   },
-  "homepage": "https://github.com/Beagle125/Project-ToDoList#readme",
+  "homepage": "https://github.com/Beagle125/Battleship#readme",
   "devDependencies": {
     "@babel/preset-env": "^7.29.7",
     "@eslint/js": "^10.0.1",
+    "css-loader": "^7.1.5",
     "eslint": "^10.8.1",
     "gh-pages": "^6.3.0",
     "globals": "^17.10.0",
-    "jest": "^30.4.2",
+    "html-loader": "^5.1.0",
+    "html-webpack-plugin": "^5.6.8",
+    "jest": "^30.5.0",
     "prettier": "3.9.6",
-    "webpack": "^5.106.2",
-    "webpack-cli": "^7.0.2",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.110.2",
+    "webpack-cli": "^7.2.3",
     "webpack-merge": "^6.0.1"
+  },
+  "dependencies": {
+    "node": "^26.8.1"
   }
 }
