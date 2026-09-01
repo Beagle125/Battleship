@@ -10,6 +10,8 @@ body {
 
   /*Fonts*/
   --mainFont: Michroma;
+  --bodySize: 2rem;
+  --headerSize: 3rem;
 
   background-color: var(--backgroundBlue);
   box-sizing: border-box;
@@ -17,4 +19,65 @@ body {
   margin: 0;
   width: 100vw;
   overflow-x: hidden;
+
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  justify-content: center;
+}
+
+/* header styles */
+#header {
+  display: flex;
+  width: 100%;
+}
+
+.centered {
+  justify-content: center;
+}
+
+.uncentered {
+  justify-content: flex-start;
+}
+
+.uncentered img {
+  scale: 0.5;
+}
+
+/*button styles*/
+.simpleBtn {
+  background-color: var(--safeBlue);
+  border: 0;
+  border-radius: 10px;
+  color: var(--utilityWhite);
+  font-family: var(--mainFont);
+  font-size: var(--bodySize);
+}
+
+.criticalBtn {
+  background-color: var(--shipRed);
+  border: 0;
+  border-radius: 10px;
+  color: var(--utilityWhite);
+  font-family: var(--mainFont);
+  font-size: var(--bodySize);
+}
+
+button {
+  transition: transform 0.3s ease-in-out;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+/*Start page styles*/
+#mainContainer {
+  display: flex;
+}
+
+.start {
+  justify-content: center;
+  gap: 2rem;
 }

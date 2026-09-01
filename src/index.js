@@ -1,3 +1,7 @@
 import "./styles.css";
+import { renderStart } from "./display.js";
 
-console.log("hello, world");
+renderStart(
+  document.querySelector("#header"),
+  document.querySelector("#mainContainer"),
+);
