@@ -1,3 +1,8 @@
+const Types = Object.freeze({
+  HUMAN: "HUMAN",
+  COMPUTER: "COMPUTER",
+});
+
 const Tile = class {
   #isShip = false;
   #isHit = false;
@@ -92,4 +97,29 @@ const Gameboard = class {
   }
 };
 
-export { Tile, Ship, Gameboard };
+const Player = class {
+  #gameboard;
+  #type;
+
+  constructor(type) {
+    this.#type = type;
+    this.#gameboard = new Gameboard();
+  }
+
+  //   playerTurn() {
+  //   }
+
+  isWin() {
+    return this.#gameboard.allShipsSunk();
+  }
+
+  get gameboard() {
+    return this.#gameboard;
+  }
+
+  get type() {
+    return this.#type;
+  }
+};
+
+export { Tile, Ship, Gameboard, Player, Types };
