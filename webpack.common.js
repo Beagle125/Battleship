@@ -1,6 +1,6 @@
 // webpack.common.js
 import path from "node:path";
-import { fileURLToPath } from "node:url";
+import HtmlWebpackPlugin from "html-webpack-plugin";
 
 export default {
   entry: "./src/index.js",
