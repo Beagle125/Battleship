@@ -109,7 +109,7 @@ const Player = class {
   //   playerTurn() {
   //   }
 
-  isWin() {
+  isDefeated() {
     return this.#gameboard.allShipsSunk();
   }
 
