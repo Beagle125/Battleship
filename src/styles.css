@@ -118,6 +118,15 @@ button:hover {
   width: 100%;
 }
 
+.footerMessage {
+  align-self: center;
+  color: var(--utilityWhite);
+  font-family: var(--mainFont);
+  font-size: var(--bodySize);
+  justify-self: center;
+  grid-column: 1 / 3;
+}
+
 /*Selection styles*/
 .gridBackground.selectionGrid {
   grid-column: 1 / 2;
