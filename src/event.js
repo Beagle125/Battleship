@@ -210,9 +210,30 @@ const finalizeEvent = (shipNum, fleet) => {
   return shipNum === fleet.length;
 };
 
-const playerTurnEvent = (data, grid) =>
+const playerTurnEvent = (opponent, data, grid) =>
   new Promise((resolve) => {
-    // player move
+    const gridArr = grid.clickableTilesArr;
+
+    // handler function
+    const handler = (event) => {
+      let targetTile = event.target.closest(".clickableTile");
+
+      if (targetTile) {
+        // find the appropriate tile
+        const currTile = gridArr.find(
+          (tile) => tile.DOMNode.id === targetTile.id,
+        );
+
+        const retVal = data.playerTurn(opponent, currTile.row, currTile.col);
+
+        if (retVal) {
+          document.removeEventListener("click", handler);
+          resolve(true);
+        }
+      }
+    };
+
+    document.addEventListener("click", handler);
   });
 
 export {

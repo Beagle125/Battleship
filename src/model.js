@@ -81,6 +81,7 @@ const Gameboard = class {
 
     if (row < min || row > max || col < min || col > max)
       throw new Error("Out of bounds coordinates");
+    else if (this.#grid[row][col].isHit) throw new Error("Already hit");
 
     const currTile = this.#grid[row][col];
     currTile.markHit();

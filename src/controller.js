@@ -34,22 +34,30 @@ const gameplayStage = async (currPlayers) => {
     document.querySelector("#mainContainer"),
   );
 
-  const player1 = { data: currPlayers[0], grid: player1Grid };
-  const player2 = { data: currPlayers[1], grid: player2Grid };
-
   let isGameOver = false;
   let currPlayerIndex = 0;
 
+  // main game loop
   while (!isGameOver) {
-    let currPlayer;
-    if (currPlayerIndex === 1) currPlayer = player1;
-    else currPlayer = player2;
-
     renderFooterMessage(`Player ${currPlayerIndex + 1}'s turn`);
-
-    await playerTurnEvent(currPlayer.data, currPlayer.grid);
+    if (currPlayerIndex === 0) {
+      await playerTurnEvent(
+        currPlayers[(currPlayerIndex + 1) % 2],
+        currPlayers[currPlayerIndex],
+        player1Grid,
+      );
+    } else {
+      await playerTurnEvent(
+        currPlayers[(currPlayerIndex + 1) % 2],
+        currPlayers[currPlayerIndex],
+        player2Grid,
+      );
+    }
 
     currPlayerIndex = (currPlayerIndex + 1) % 2;
+
+    isGameOver = currPlayers[0].isDefeated() || currPlayers[1].isDefeated();
+    console.log(isGameOver + ":" + currPlayerIndex);
   }
 };
 
