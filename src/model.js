@@ -148,23 +148,6 @@ const Player = class {
   }
 };
 
-const PlayerList = class {
-  #player1;
-  #player2;
-  constructor(type) {
-    this.#player1 = new Player(PlayerTypes.HUMAN);
-    this.#player2 = new Player(type);
-  }
-
-  get player1() {
-    return this.#player1;
-  }
-
-  get player2() {
-    return this.#player2;
-  }
-};
-
 const Fleet = () => {
   const fleet = [
     new Ship(5, "Carrier"),
@@ -177,4 +160,4 @@ const Fleet = () => {
   return fleet;
 };
 
-export { Tile, Ship, Gameboard, Player, PlayerList, Fleet };
+export { Tile, Ship, Gameboard, Player, Fleet };

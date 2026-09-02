@@ -1,4 +1,5 @@
-import { PlayerList } from "./model.js";
+import { Player } from "./model.js";
+
 import { renderStart, renderGameplay, renderFooterMessage } from "./display.js";
 import {
   humanPlanningEvent,
@@ -15,18 +16,16 @@ const startStage = () => {
 };
 
 const selectionStage = async (type) => {
-  let currPlayers = new PlayerList(type);
-
   const playerArr = new Array();
-  playerArr.push(currPlayers.player1);
-  playerArr.push(currPlayers.player2);
+  playerArr.push(new Player(PlayerTypes.HUMAN));
+  playerArr.push(new Player(type));
 
   for (const player of playerArr) {
     if (player.type === PlayerTypes.HUMAN) await humanPlanningEvent(player);
     else await computerPlanningEvent(player);
   }
 
-  gameplayStage(currPlayers);
+  gameplayStage(playerArr);
 };
 
 const gameplayStage = async (currPlayers) => {
