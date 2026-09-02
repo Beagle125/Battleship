@@ -62,4 +62,14 @@ const renderFooterMessage = (message) => {
   footer.textContent = message;
 };
 
-export { renderStart, renderSelection, renderFooterMessage };
+const renderPlacements = (tiles) => {
+  for (const tile of tiles) {
+    const placementTile = document.createElement("img");
+    const node = tile.DOMNode;
+    placementTile.src = placement;
+    placementTile.classList.add("placementTile");
+    node.appendChild(placementTile);
+  }
+};
+
+export { renderStart, renderSelection, renderFooterMessage, renderPlacements };

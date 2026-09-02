@@ -1,6 +1,10 @@
 import { startStage, selectionStage } from "./controller.js";
-import { delay } from "./displayAssets.js";
-import { renderSelection, renderFooterMessage } from "./display.js";
+import { delay, ClickableTile } from "./displayAssets.js";
+import {
+  renderSelection,
+  renderFooterMessage,
+  renderPlacements,
+} from "./display.js";
 import { PlayerTypes } from "./types.js";
 import { Fleet } from "./model.js";
 
@@ -63,6 +67,7 @@ const humanPlanningEvent = (player) => {
   gridTiles.forEach((tile) => {
     tile.DOMNode.addEventListener("click", () => {
       const coords = new Array();
+      const placements = new Array();
       const ship = fleet[shipNum];
       coords.push([tile.row, tile.col]);
 
@@ -71,8 +76,16 @@ const humanPlanningEvent = (player) => {
         else coords.push([tile.row, tile.col - i]);
       }
 
+      for (const coord of coords) {
+        const clickableTile = gridTiles.find(
+          (obj) => obj.row === coord[0] && obj.col === coord[1],
+        );
+        placements.push(clickableTile);
+      }
+
       if (player.setShip(ship, coords)) {
         shipNum += 1;
+        renderPlacements(placements);
         renderFooterMessage(`Selecting the ${fleet[shipNum].name}`);
       }
     });
