@@ -12,7 +12,7 @@ const startStage = () => {
   );
 };
 
-const selectionStage = (type) => {
+const selectionStage = async (type) => {
   currPlayers = new PlayerList(type);
 
   const playerArr = new Array();
@@ -20,9 +20,11 @@ const selectionStage = (type) => {
   playerArr.push(currPlayers.player2);
 
   for (const player of playerArr) {
-    if (player.type === PlayerTypes.HUMAN) humanPlanningEvent(player);
-    else computerPlanningEvent(player);
+    if (player.type === PlayerTypes.HUMAN) await humanPlanningEvent(player);
+    else await computerPlanningEvent(player);
   }
+
+  startStage();
 };
 
 export { startStage, selectionStage, currPlayers };

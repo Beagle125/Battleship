@@ -90,7 +90,6 @@ const renderHoverPlacements = (tiles) => {
 const renderUnhoverPlacements = (tiles) => {
   for (const tile of tiles) {
     if (!tile) return;
-    const placementTile = document.createElement("img");
     const node = tile.DOMNode;
 
     if (!node.classList.contains("noShip")) break;
