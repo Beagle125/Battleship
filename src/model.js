@@ -103,7 +103,15 @@ const Player = class {
     this.#gameboard = new Gameboard();
   }
 
-  //  setShip() {}
+  setShip(ship, coords) {
+    const min = 0,
+      max = 9;
+    let retVal = coords.flat().every((num) => num >= min && num <= max);
+
+    if (retVal) this.#gameboard.addShip(ship, coords);
+
+    return retVal;
+  }
 
   //  playerTurn() {}
 
