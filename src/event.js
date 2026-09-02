@@ -143,7 +143,9 @@ const humanPlanningEvent = (player) =>
       if (targetRotate) {
         verticalAxis = rotateEvent(verticalAxis);
       } else if (targetRandomize) {
-        renderFooterMessage("Placing your ships");
+        const loader = document.createElement("div");
+        loader.classList.add("spinningIcon");
+        renderFooterMessage("Placing your ships", loader);
         await randomizeEvent(player, gridTiles, shipNum, fleet);
         shipNum = fleet.length;
         renderFooterMessage("Ready for battle!");

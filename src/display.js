@@ -51,7 +51,7 @@ const renderSelection = (header, mainContainer) => {
   return grid;
 };
 
-const renderFooterMessage = (message) => {
+const renderFooterMessage = (message, ...additional) => {
   if (!document.querySelector(".footerMessage")) {
     const mainContainer = document.querySelector("#mainContainer");
     const footer = document.createElement("p");
@@ -60,6 +60,8 @@ const renderFooterMessage = (message) => {
   }
   const footer = document.querySelector(".footerMessage");
   footer.textContent = message;
+
+  for (const node of additional) footer.appendChild(node);
 };
 
 const renderPlacements = (tiles) => {
