@@ -36,3 +36,21 @@ test("test setShip for an invalid value", () => {
   ]);
   expect(retVal).toBeFalsy();
 });
+
+test("test setShip by setting a ship on something that is already occupied", () => {
+  const player1 = new Player(PlayerTypes.HUMAN);
+  player1.setShip(new Ship(5), [
+    [0, 0],
+    [0, 1],
+    [0, 2],
+    [0, 3],
+    [0, 4],
+  ]);
+
+  const retVal = player1.setShip(new Ship(3), [
+    [0, 0],
+    [0, 1],
+    [0, 2],
+  ]);
+  expect(retVal).toBeFalsy();
+});

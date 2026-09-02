@@ -35,9 +35,11 @@ const Ship = class {
   #length;
   #timesHit = 0;
   #sunk = false;
+  #name;
 
-  constructor(length) {
+  constructor(length, name = "Carrier") {
     this.#length = length;
+    this.#name = name;
   }
 
   hit() {
@@ -51,6 +53,10 @@ const Ship = class {
 
   get sunk() {
     return this.#sunk;
+  }
+
+  get name() {
+    return this.#name;
   }
 };
 
@@ -106,7 +112,9 @@ const Player = class {
   setShip(ship, coords) {
     const min = 0,
       max = 9;
-    let retVal = coords.flat().every((num) => num >= min && num <= max);
+    let retVal =
+      coords.flat().every((num) => num >= min && num <= max) &&
+      coords.every((arr) => !this.#gameboard.grid[arr[0]][arr[1]].isShip);
 
     if (retVal) this.#gameboard.addShip(ship, coords);
 
@@ -145,4 +153,20 @@ const PlayerList = class {
   }
 };
 
-export { Tile, Ship, Gameboard, Player, PlayerList };
+const Fleet = class {
+  carrier;
+  battleship;
+  destroyer;
+  submarine;
+  patrol;
+
+  constructor() {
+    this.carrier = new Ship(5, "Carrier");
+    this.battleship = new Ship(4, "Battleship");
+    this.destroyer = new Ship(3, "Destroyer");
+    this.submarine = new Ship(3, "Submarine");
+    this.patrol = new Ship(2, "Patrol");
+  }
+};
+
+export { Tile, Ship, Gameboard, Player, PlayerList, Fleet };
