@@ -1,4 +1,4 @@
 import "./styles.css";
-import { loadStart } from "./event.js";
+import { loadStartEvent } from "./event.js";
 
-loadStart();
+loadStartEvent();

@@ -1,8 +1,9 @@
 import { startStage, selectionStage } from "./controller.js";
 import { delay } from "./displayAssets.js";
+import { renderSelection } from "./display.js";
 import { PlayerTypes } from "./types.js";
 
-const loadStart = () => {
+const loadStartEvent = () => {
   startStage();
 };
 
@@ -42,6 +43,40 @@ const loadComputerPlayersEvent = async () => {
   selectionStage(PlayerTypes.COMPUTER);
 };
 
+const humanPlanningEvent = (player) => {
+  const grid = renderSelection(
+    document.querySelector("#header"),
+    mainContainer,
+  );
+
+  grid.DOMNode.classList.add("selectionGrid");
+
+  const grid1Tiles = grid.clickableTilesArr;
+
+  grid1Tiles.forEach((tile) => {
+    tile.DOMNode.addEventListener("click", () => {
+      console.log("Clicked!");
+    });
+  });
+};
+
+const computerPlanningEvent = (player) => {
+  const grid = renderSelection(
+    document.querySelector("#header"),
+    mainContainer,
+  );
+
+  grid.DOMNode.classList.add("selectionGrid");
+
+  const grid1Tiles = grid.clickableTilesArr;
+
+  grid1Tiles.forEach((tile) => {
+    tile.DOMNode.addEventListener("click", (event) => {
+      console.log("Clicked!");
+    });
+  });
+};
+
 const rotateEvent = () => {
   console.log("rotate");
 };
@@ -55,9 +90,11 @@ const finalizeEvent = () => {
 };
 
 export {
-  loadStart,
+  loadStartEvent,
   loadTwoPlayersEvent,
   loadComputerPlayersEvent,
+  humanPlanningEvent,
+  computerPlanningEvent,
   rotateEvent,
   randomizeEvent,
   finalizeEvent,
