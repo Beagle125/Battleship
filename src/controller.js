@@ -15,6 +15,8 @@ const generatePlayers = (type) => {
     mainContainer,
   );
 
+  grid1.DOMNode.classList.add("selectionGrid");
+
   const grid1Tiles = grid1.clickableTilesArr;
 
   grid1Tiles.forEach((tile) => {
