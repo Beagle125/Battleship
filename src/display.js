@@ -2,6 +2,7 @@ import hit from "../static/hit.svg";
 import logo from "../static/logo.svg";
 import miss from "../static/miss.svg";
 import placement from "../static/placement.svg";
+import select from "../static/select.svg";
 
 import { Button, Grid } from "./displayAssets.js";
 import { loadTwoPlayersEvent, loadComputerPlayersEvent } from "./event.js";
@@ -127,7 +128,7 @@ const renderHoverTile = (tile) => {
 
   if (!tile.classList.contains("noShip")) return;
   const selectionTile = document.createElement("img");
-  selectionTile.src = miss;
+  selectionTile.src = select;
   selectionTile.classList.add("placementTile");
   selectionTile.classList.add("faded");
   tile.appendChild(selectionTile);
