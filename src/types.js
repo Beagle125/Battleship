@@ -1,6 +1,11 @@
-const Types = Object.freeze({
+const PlayerTypes = Object.freeze({
   HUMAN: "HUMAN",
   COMPUTER: "COMPUTER",
 });
 
-export { Types };
+const TileTypes = Object.freeze({
+  SELECTION: "SELECTION",
+  GAMEPLAY: "GAMEPLAY",
+});
+
+export { PlayerTypes, TileTypes };
