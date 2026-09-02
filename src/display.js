@@ -4,6 +4,7 @@ import miss from "../static/miss.svg";
 import placement from "../static/placement.svg";
 
 import { delay, Button, ClickableTile, Grid } from "./displayAssets.js";
+import { rotateEvent, randomizeEvent, finalizeEvent } from "./event.js";
 import { currPlayers, generatePlayers } from "./controller.js";
 import { PlayerTypes } from "./types.js";
 
@@ -79,15 +80,9 @@ const renderSelection = (header, mainContainer) => {
 
   const buttonsDiv = document.createElement("div");
   buttonsDiv.classList.add("buttonSelectionContainer");
-  const rotateBtn = new Button("simpleBtn", "Rotate", () =>
-    console.log("to rotate"),
-  );
-  const randomizeBtn = new Button("simpleBtn", "Randomize", () =>
-    console.log("to randomize"),
-  );
-  const finalizeBtn = new Button("criticalBtn", "Finalize", () => {
-    console.log("to finalize");
-  });
+  const rotateBtn = new Button("simpleBtn", "Rotate", rotateEvent);
+  const randomizeBtn = new Button("simpleBtn", "Randomize", randomizeEvent);
+  const finalizeBtn = new Button("criticalBtn", "Finalize", finalizeEvent);
 
   buttonsDiv.appendChild(rotateBtn.DOMNode);
   buttonsDiv.appendChild(randomizeBtn.DOMNode);
