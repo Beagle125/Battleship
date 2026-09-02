@@ -44,28 +44,27 @@ const loadComputerPlayersEvent = async () => {
   selectionStage(PlayerTypes.COMPUTER);
 };
 
-const selectionTileEvent = (player, gridTiles) => {
-  gridTiles.forEach((tile) => {
-    tile.DOMNode.addEventListener("click", () => {
-      console.log("idk");
-    });
-  });
-};
-
 const humanPlanningEvent = (player) => {
   const verticalAxis = true;
+  let currShip;
+  let shipNum = 0;
+
   const grid = renderSelection(
     document.querySelector("#header"),
     mainContainer,
   );
   grid.DOMNode.classList.add("selectionGrid");
-
   const gridTiles = grid.clickableTilesArr;
-  selectionTileEvent(player, gridTiles);
 
   const fleet = Fleet();
 
-  renderFooterMessage(`Selecting the ${fleet[0].name}`);
+  renderFooterMessage(`Selecting the ${fleet[shipNum].name}`);
+  gridTiles.forEach((tile) => {
+    tile.DOMNode.addEventListener("click", () => {
+      shipNum += 1;
+      renderFooterMessage(`Selecting the ${fleet[shipNum].name}`);
+    });
+  });
 };
 
 const computerPlanningEvent = (player) => {
