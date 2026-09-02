@@ -59,10 +59,22 @@ const humanPlanningEvent = (player) => {
   const fleet = Fleet();
 
   renderFooterMessage(`Selecting the ${fleet[shipNum].name}`);
+
   gridTiles.forEach((tile) => {
     tile.DOMNode.addEventListener("click", () => {
-      shipNum += 1;
-      renderFooterMessage(`Selecting the ${fleet[shipNum].name}`);
+      const coords = new Array();
+      const ship = fleet[shipNum];
+      coords.push([tile.row, tile.col]);
+
+      for (let i = 1; i < ship.shipLength; i++) {
+        if (verticalAxis) coords.push([tile.row + i, tile.col]);
+        else coords.push([tile.row, tile.col - i]);
+      }
+
+      if (player.setShip(ship, coords)) {
+        shipNum += 1;
+        renderFooterMessage(`Selecting the ${fleet[shipNum].name}`);
+      }
     });
   });
 };

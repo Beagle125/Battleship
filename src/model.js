@@ -32,13 +32,13 @@ const Tile = class {
 };
 
 const Ship = class {
-  #length;
+  #shipLength;
   #timesHit = 0;
   #sunk = false;
   #name;
 
   constructor(length, name = "Carrier") {
-    this.#length = length;
+    this.#shipLength = length;
     this.#name = name;
   }
 
@@ -48,7 +48,7 @@ const Ship = class {
   }
 
   #checkSunk() {
-    if (this.#timesHit == this.#length) this.#sunk = true;
+    if (this.#timesHit == this.#shipLength) this.#sunk = true;
   }
 
   get sunk() {
@@ -57,6 +57,10 @@ const Ship = class {
 
   get name() {
     return this.#name;
+  }
+
+  get shipLength() {
+    return this.#shipLength;
   }
 };
 
