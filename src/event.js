@@ -73,7 +73,6 @@ const positionShips = (gridTiles, tile, verticalAxis, ship) => {
 const humanPlanningEvent = (player) => {
   let verticalAxis = true;
   let shipNum = 0;
-  const maxShips = 5;
 
   const grid = renderSelection(
     document.querySelector("#header"),
@@ -89,7 +88,7 @@ const humanPlanningEvent = (player) => {
   gridTiles.forEach((tile) => {
     // inputting ships
     tile.DOMNode.addEventListener("click", () => {
-      if (shipNum === maxShips) return;
+      if (shipNum === fleet.length) return;
       const { coords, placements } = positionShips(
         gridTiles,
         tile,
@@ -100,7 +99,7 @@ const humanPlanningEvent = (player) => {
       if (player.setShip(fleet[shipNum], coords)) {
         shipNum += 1;
         renderPlacements(placements);
-        if (shipNum < maxShips)
+        if (shipNum < fleet.length)
           renderFooterMessage(`Selecting the ${fleet[shipNum].name}`);
         else renderFooterMessage("Ready for battle!");
       }
@@ -108,7 +107,7 @@ const humanPlanningEvent = (player) => {
 
     // hovering over tiles
     tile.DOMNode.addEventListener("mouseenter", () => {
-      if (shipNum === maxShips) return;
+      if (shipNum === fleet.length) return;
       const placements = positionShips(
         gridTiles,
         tile,
@@ -121,7 +120,7 @@ const humanPlanningEvent = (player) => {
 
     // unhovering over tiles
     tile.DOMNode.addEventListener("mouseleave", () => {
-      if (shipNum === maxShips) return;
+      if (shipNum === fleet.length) return;
       const placements = positionShips(
         gridTiles,
         tile,
@@ -134,11 +133,17 @@ const humanPlanningEvent = (player) => {
   });
 
   // button events
-  document.addEventListener("click", (event) => {
+  document.addEventListener("click", async (event) => {
     const targetRotate = event.target.closest(".rotateBtn");
+    const targetRandomize = event.target.closest(".randomizeBtn");
 
     if (targetRotate) {
       verticalAxis = rotateEvent(verticalAxis);
+    } else if (targetRandomize) {
+      renderFooterMessage("Placing your ships");
+      await randomizeEvent(player, gridTiles, shipNum, fleet);
+      shipNum = fleet.length;
+      renderFooterMessage("Ready for battle!");
     }
   });
 };
@@ -164,8 +169,35 @@ const rotateEvent = (isVertical) => {
   return !isVertical;
 };
 
-const randomizeEvent = () => {
-  console.log("randomize");
+const randomizeEvent = async (player, gridTiles, shipNum, fleet) => {
+  let verticalAxis = true;
+
+  for (let currShipNum = shipNum; currShipNum < fleet.length; currShipNum++) {
+    if (Math.floor(Math.random() * 2)) verticalAxis = rotateEvent(verticalAxis);
+
+    const filteredTiles = gridTiles.filter((tile) =>
+      tile.DOMNode.classList.contains("noShip"),
+    );
+    let isValid = false;
+
+    while (!isValid) {
+      const tile =
+        filteredTiles[Math.floor(Math.random() * filteredTiles.length)];
+      console.log(tile);
+      const { coords, placements } = positionShips(
+        gridTiles,
+        tile,
+        verticalAxis,
+        fleet[currShipNum],
+      );
+
+      if (player.setShip(fleet[currShipNum], coords)) {
+        isValid = true;
+        renderPlacements(placements);
+      }
+    }
+    await delay(1000);
+  }
 };
 
 const finalizeEvent = () => {
