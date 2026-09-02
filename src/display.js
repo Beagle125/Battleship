@@ -3,10 +3,14 @@ import logo from "../static/logo.svg";
 import miss from "../static/miss.svg";
 import placement from "../static/placement.svg";
 
-import { delay, Button, ClickableTile, Grid } from "./displayAssets.js";
-import { rotateEvent, randomizeEvent, finalizeEvent } from "./event.js";
-import { currPlayers, generatePlayers } from "./controller.js";
-import { PlayerTypes } from "./types.js";
+import { Button, Grid } from "./displayAssets.js";
+import {
+  loadTwoPlayersEvent,
+  loadComputerPlayersEvent,
+  rotateEvent,
+  randomizeEvent,
+  finalizeEvent,
+} from "./event.js";
 
 const renderStart = (header, mainContainer) => {
   header.replaceChildren();
@@ -18,55 +22,14 @@ const renderStart = (header, mainContainer) => {
   header.appendChild(logoImg);
 
   mainContainer.classList.replace("gameplay", "start");
-  const twoPlayerButton = new Button(
-    "simpleBtn",
-    "2 player",
-    renderLoadTwoPlayers,
-  );
-  const computerButton = new Button(
-    "simpleBtn",
-    "computer",
-    renderLoadComputerPlayers,
-  );
+  const twoPlayerButton = new Button("simpleBtn", "2 player");
+  const computerButton = new Button("simpleBtn", "computer");
+
+  twoPlayerButton.DOMNode.addEventListener("click", loadTwoPlayersEvent);
+  computerButton.DOMNode.addEventListener("click", loadComputerPlayersEvent);
 
   mainContainer.appendChild(twoPlayerButton.DOMNode);
   mainContainer.appendChild(computerButton.DOMNode);
-};
-
-const renderLoadTwoPlayers = async () => {
-  const mainContainer = document.querySelector("#mainContainer");
-  mainContainer.replaceChildren();
-
-  const loadMessage = document.createElement("p");
-  loadMessage.textContent = "Loading Fleet";
-  loadMessage.classList.add("loadingMessage");
-  mainContainer.appendChild(loadMessage);
-
-  const loadingIcon = document.createElement("div");
-  loadingIcon.classList.add("spinningIcon");
-  mainContainer.appendChild(loadingIcon);
-
-  await delay(2000);
-
-  generatePlayers(PlayerTypes.HUMAN);
-};
-
-const renderLoadComputerPlayers = async () => {
-  const mainContainer = document.querySelector("#mainContainer");
-  mainContainer.replaceChildren();
-
-  const loadMessage = document.createElement("p");
-  loadMessage.textContent = "Loading Fleet";
-  loadMessage.classList.add("loadingMessage");
-  mainContainer.appendChild(loadMessage);
-
-  const loadingIcon = document.createElement("div");
-  loadingIcon.classList.add("spinningIcon");
-  mainContainer.appendChild(loadingIcon);
-
-  await delay(2000);
-
-  generatePlayers(PlayerTypes.COMPUTER);
 };
 
 const renderSelection = (header, mainContainer) => {
@@ -80,9 +43,9 @@ const renderSelection = (header, mainContainer) => {
 
   const buttonsDiv = document.createElement("div");
   buttonsDiv.classList.add("buttonSelectionContainer");
-  const rotateBtn = new Button("simpleBtn", "Rotate", rotateEvent);
-  const randomizeBtn = new Button("simpleBtn", "Randomize", randomizeEvent);
-  const finalizeBtn = new Button("criticalBtn", "Finalize", finalizeEvent);
+  const rotateBtn = new Button("simpleBtn", "Rotate");
+  const randomizeBtn = new Button("simpleBtn", "Randomize");
+  const finalizeBtn = new Button("criticalBtn", "Finalize");
 
   buttonsDiv.appendChild(rotateBtn.DOMNode);
   buttonsDiv.appendChild(randomizeBtn.DOMNode);

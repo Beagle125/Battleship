@@ -1,11 +1,16 @@
 import { PlayerList } from "./model.js";
-import { renderSelection } from "./display.js";
-import { Grid, ClickableTile } from "./displayAssets.js";
-import { PlayerTypes } from "./types.js";
+import { renderStart, renderSelection } from "./display.js";
 
 let currPlayers;
 
-const generatePlayers = (type) => {
+const startStage = () => {
+  renderStart(
+    document.querySelector("#header"),
+    document.querySelector("#mainContainer"),
+  );
+};
+
+const selectionStage = (type) => {
   currPlayers = new PlayerList(type);
 
   // for player 1
@@ -29,4 +34,4 @@ const generatePlayers = (type) => {
   const player2 = currPlayers.player2;
 };
 
-export { PlayerList, generatePlayers, currPlayers };
+export { startStage, selectionStage, currPlayers };

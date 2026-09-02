@@ -1,7 +1,4 @@
 import "./styles.css";
-import { renderStart } from "./display.js";
+import { loadStart } from "./event.js";
 
-renderStart(
-  document.querySelector("#header"),
-  document.querySelector("#mainContainer"),
-);
+loadStart();
