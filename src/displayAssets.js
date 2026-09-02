@@ -1,13 +1,17 @@
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-const Button = (type, text, action) => {
-  const newButton = document.createElement("button");
-  newButton.classList.add(type);
-  newButton.textContent = text;
+const Button = class {
+  #DOMNode;
+  constructor(type, text, action) {
+    this.#DOMNode = document.createElement("button");
+    this.#DOMNode.classList.add(type);
+    this.#DOMNode.textContent = text;
+    this.#DOMNode.addEventListener("click", action);
+  }
 
-  newButton.addEventListener("click", action);
-
-  return { newButton };
+  get DOMNode() {
+    return this.#DOMNode;
+  }
 };
 
 export { delay, Button };

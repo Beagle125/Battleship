@@ -15,11 +15,11 @@ const renderStart = (header, mainContainer) => {
   header.appendChild(logoImg);
 
   mainContainer.classList.replace("gameplay", "start");
-  const twoPlayerButton = Button("simpleBtn", "2 player", renderLoad);
-  const computerButton = Button("simpleBtn", "computer", renderLoad);
+  const twoPlayerButton = new Button("simpleBtn", "2 player", renderLoad);
+  const computerButton = new Button("simpleBtn", "computer", renderLoad);
 
-  mainContainer.appendChild(twoPlayerButton.newButton);
-  mainContainer.appendChild(computerButton.newButton);
+  mainContainer.appendChild(twoPlayerButton.DOMNode);
+  mainContainer.appendChild(computerButton.DOMNode);
 };
 
 const renderLoad = async () => {
