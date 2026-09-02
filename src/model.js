@@ -1,4 +1,4 @@
-import { Types } from "./types.js";
+import { PlayerTypes } from "./types.js";
 
 const Tile = class {
   #isShip = false;
@@ -124,7 +124,7 @@ const PlayerList = class {
   #player1;
   #player2;
   constructor(type) {
-    this.#player1 = new Player(Types.HUMAN);
+    this.#player1 = new Player(PlayerTypes.HUMAN);
     this.#player2 = new Player(type);
   }
 

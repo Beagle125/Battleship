@@ -5,7 +5,7 @@ import placement from "../static/placement.svg";
 
 import { delay, Button, ClickableTile, Grid } from "./displayAssets.js";
 import { currPlayers, generatePlayers } from "./controller.js";
-import { Types } from "./types.js";
+import { PlayerTypes } from "./types.js";
 
 const renderStart = (header, mainContainer) => {
   header.replaceChildren();
@@ -47,11 +47,7 @@ const renderLoadTwoPlayers = async () => {
 
   await delay(2000);
 
-  renderSelection(
-    document.querySelector("#header"),
-    Types.HUMAN,
-    mainContainer,
-  );
+  generatePlayers(PlayerTypes.HUMAN);
 };
 
 const renderLoadComputerPlayers = async () => {
@@ -69,14 +65,10 @@ const renderLoadComputerPlayers = async () => {
 
   await delay(2000);
 
-  renderSelection(
-    document.querySelector("#header"),
-    Types.COMPUTER,
-    mainContainer,
-  );
+  generatePlayers(PlayerTypes.COMPUTER);
 };
 
-const renderSelection = (header, type, mainContainer) => {
+const renderSelection = (header, mainContainer) => {
   mainContainer.replaceChildren();
 
   header.classList.replace("centered", "uncentered");
@@ -85,7 +77,6 @@ const renderSelection = (header, type, mainContainer) => {
 
   const grid = new Grid();
   mainContainer.appendChild(grid.DOMNode);
-  generatePlayers(type);
 };
 
-export { renderStart };
+export { renderStart, renderSelection };

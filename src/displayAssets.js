@@ -1,3 +1,5 @@
+import { TileTypes } from "./types.js";
+
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const Button = class {
