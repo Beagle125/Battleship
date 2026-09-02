@@ -65,6 +65,10 @@ const Grid = class {
   get DOMNode() {
     return this.#DOMNode;
   }
+
+  get clickableTilesArr() {
+    return this.#clickableTilesArr;
+  }
 };
 
 export { delay, Button, Grid, ClickableTile };

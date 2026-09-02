@@ -77,6 +77,8 @@ const renderSelection = (header, mainContainer) => {
 
   const grid = new Grid();
   mainContainer.appendChild(grid.DOMNode);
+
+  return grid;
 };
 
 export { renderStart, renderSelection };

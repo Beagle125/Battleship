@@ -1,18 +1,30 @@
 import { PlayerList } from "./model.js";
 import { renderSelection } from "./display.js";
+import { Grid, ClickableTile } from "./displayAssets.js";
 import { PlayerTypes } from "./types.js";
 
 let currPlayers;
 
 const generatePlayers = (type) => {
-  renderSelection(document.querySelector("#header"), mainContainer);
   currPlayers = new PlayerList(type);
 
-  // for each player
+  // for player 1
+  const player1 = currPlayers.player1;
+  const grid1 = renderSelection(
+    document.querySelector("#header"),
+    mainContainer,
+  );
 
-  // check if its a human or a computer
+  const grid1Tiles = grid1.clickableTilesArr;
 
-  // then do the appropriate action
+  grid1Tiles.forEach((tile) => {
+    tile.DOMNode.addEventListener("click", (event) => {
+      console.log("Clicked!");
+    });
+  });
+
+  // for player 2
+  const player2 = currPlayers.player2;
 };
 
 export { PlayerList, generatePlayers, currPlayers };
