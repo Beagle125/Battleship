@@ -4,13 +4,7 @@ import miss from "../static/miss.svg";
 import placement from "../static/placement.svg";
 
 import { Button, Grid } from "./displayAssets.js";
-import {
-  loadTwoPlayersEvent,
-  loadComputerPlayersEvent,
-  rotateEvent,
-  randomizeEvent,
-  finalizeEvent,
-} from "./event.js";
+import { loadTwoPlayersEvent, loadComputerPlayersEvent } from "./event.js";
 
 const renderStart = (header, mainContainer) => {
   header.replaceChildren();
@@ -58,13 +52,14 @@ const renderSelection = (header, mainContainer) => {
 };
 
 const renderFooterMessage = (message) => {
-  const mainContainer = document.querySelector("#mainContainer");
-
-  const footer = document.createElement("p");
-  footer.classList.add("footerMessage");
+  if (!document.querySelector(".footerMessage")) {
+    const mainContainer = document.querySelector("#mainContainer");
+    const footer = document.createElement("p");
+    footer.classList.add("footerMessage");
+    mainContainer.appendChild(footer);
+  }
+  const footer = document.querySelector(".footerMessage");
   footer.textContent = message;
-
-  mainContainer.appendChild(footer);
 };
 
 export { renderStart, renderSelection, renderFooterMessage };
