@@ -51,6 +51,19 @@ const renderSelection = (header, mainContainer) => {
   return grid;
 };
 
+const renderComputerLoader = (header, mainContainer) => {
+  mainContainer.replaceChildren();
+
+  header.classList.replace("centered", "uncentered");
+
+  mainContainer.classList.replace("start", "gameplay");
+
+  const loader = document.createElement("div");
+  loader.classList.add("spinningIcon");
+
+  renderFooterMessage("Computer placing its fleet...", loader);
+};
+
 const renderFooterMessage = (message, ...additional) => {
   if (!document.querySelector(".footerMessage")) {
     const mainContainer = document.querySelector("#mainContainer");
@@ -106,4 +119,5 @@ export {
   renderPlacements,
   renderHoverPlacements,
   renderUnhoverPlacements,
+  renderComputerLoader,
 };

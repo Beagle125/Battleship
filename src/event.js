@@ -1,11 +1,12 @@
 import { startStage, selectionStage } from "./controller.js";
-import { delay, ClickableTile } from "./displayAssets.js";
+import { delay, Grid } from "./displayAssets.js";
 import {
   renderSelection,
   renderFooterMessage,
   renderPlacements,
   renderHoverPlacements,
   renderUnhoverPlacements,
+  renderComputerLoader,
 } from "./display.js";
 import { PlayerTypes } from "./types.js";
 import { Fleet } from "./model.js";
@@ -157,22 +158,19 @@ const humanPlanningEvent = (player) =>
     });
   });
 
-const computerPlanningEvent = (player) => {
-  const grid = renderSelection(
-    document.querySelector("#header"),
-    mainContainer,
-  );
+const computerPlanningEvent = (player) =>
+  new Promise(async (resolve) => {
+    let shipNum = 0;
+    const fleet = Fleet();
+    const mainContainer = document.querySelector("#mainContainer");
+    const grid = new Grid();
+    const gridTiles = grid.clickableTilesArr;
 
-  grid.DOMNode.classList.add("selectionGrid");
+    renderComputerLoader(document.querySelector("#header"), mainContainer);
 
-  const gridTiles = grid.clickableTilesArr;
-
-  gridTiles.forEach((tile) => {
-    tile.DOMNode.addEventListener("click", (event) => {
-      console.log("Clicked!");
-    });
+    await randomizeEvent(player, gridTiles, shipNum, fleet);
+    resolve(true);
   });
-};
 
 const rotateEvent = (isVertical) => {
   return !isVertical;
@@ -192,7 +190,6 @@ const randomizeEvent = async (player, gridTiles, shipNum, fleet) => {
     while (!isValid) {
       const tile =
         filteredTiles[Math.floor(Math.random() * filteredTiles.length)];
-      console.log(tile);
       const { coords, placements } = positionShips(
         gridTiles,
         tile,
@@ -202,7 +199,7 @@ const randomizeEvent = async (player, gridTiles, shipNum, fleet) => {
 
       if (player.setShip(fleet[currShipNum], coords)) {
         isValid = true;
-        renderPlacements(placements);
+        if (player.type === PlayerTypes.HUMAN) renderPlacements(placements);
       }
     }
     await delay(1000);
