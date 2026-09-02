@@ -32,7 +32,7 @@ body {
   align-items: center;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
   justify-content: center;
 }
 
@@ -109,5 +109,32 @@ button:hover {
 
 /*Gameplay page styles*/
 #mainContainer.gameplay {
+  display: grid;
   flex: 1;
+  gap: 1rem;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 2fr 0.5fr;
+  width: 100%;
+}
+
+/*Selection styles*/
+.gridBackground.selectionGrid {
+  grid-column: 1 / 2;
+  margin-left: 1rem;
+}
+
+/*Grid styles*/
+.gridBackground {
+  display: grid;
+  border: 2px solid var(--utilityWhite);
+}
+
+.rowTiles {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+}
+
+.clickableTile {
+  background-color: var(--backgroundBlue);
+  border: 2px solid var(--utilityWhite);
 }
