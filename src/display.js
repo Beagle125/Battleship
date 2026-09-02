@@ -112,6 +112,8 @@ const renderUnhoverPlacements = (tiles) => {
   }
 };
 
+const renderGameplay = (header, mainContainer) => {};
+
 export {
   renderStart,
   renderSelection,

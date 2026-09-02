@@ -113,7 +113,7 @@ button:hover {
   display: grid;
   flex: 1;
   gap: 1rem;
-  grid-template-columns: 1fr 1.5fr;
+  grid-template-columns: 1fr 1fr;
   grid-template-rows: 2fr 0.5fr;
   margin-left: 3rem;
   width: 100%;
@@ -135,7 +135,7 @@ button:hover {
 /*Selection styles*/
 .gridBackground.selectionGrid {
   grid-column: 1 / 2;
-  margin-left: 1rem;
+  margin-left: 20%;
 }
 
 .buttonSelectionContainer {
@@ -143,12 +143,14 @@ button:hover {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  margin-right: 20%;
 }
 
 /*Grid styles*/
 .gridBackground {
   display: grid;
   border: 3px solid var(--utilityWhite);
+  width: 70%;
 }
 
 .rowTiles {
