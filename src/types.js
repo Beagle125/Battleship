@@ -3,9 +3,4 @@ const PlayerTypes = Object.freeze({
   COMPUTER: "COMPUTER",
 });
 
-const TileTypes = Object.freeze({
-  SELECTION: "SELECTION",
-  GAMEPLAY: "GAMEPLAY",
-});
-
-export { PlayerTypes, TileTypes };
+export { PlayerTypes };
