@@ -210,6 +210,11 @@ const finalizeEvent = (shipNum, fleet) => {
   return shipNum === fleet.length;
 };
 
+const playerTurnEvent = (data, grid) =>
+  new Promise((resolve) => {
+    // player move
+  });
+
 export {
   loadStartEvent,
   loadTwoPlayersEvent,
@@ -219,4 +224,5 @@ export {
   rotateEvent,
   randomizeEvent,
   finalizeEvent,
+  playerTurnEvent,
 };

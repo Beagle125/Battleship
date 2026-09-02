@@ -125,7 +125,14 @@ const Player = class {
     return retVal;
   }
 
-  //  playerTurn() {}
+  playerTurn(player, row, col) {
+    try {
+      player.#gameboard.receiveAttack(row, col);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
 
   isDefeated() {
     return this.#gameboard.allShipsSunk();

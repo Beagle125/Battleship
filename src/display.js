@@ -112,7 +112,17 @@ const renderUnhoverPlacements = (tiles) => {
   }
 };
 
-const renderGameplay = (header, mainContainer) => {};
+const renderGameplay = (mainContainer) => {
+  mainContainer.replaceChildren();
+
+  const player1Grid = new Grid();
+  const player2Grid = new Grid();
+
+  mainContainer.appendChild(player1Grid.DOMNode);
+  mainContainer.appendChild(player2Grid.DOMNode);
+
+  return { player1Grid, player2Grid };
+};
 
 export {
   renderStart,
@@ -122,4 +132,5 @@ export {
   renderHoverPlacements,
   renderUnhoverPlacements,
   renderComputerLoader,
+  renderGameplay,
 };

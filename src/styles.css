@@ -115,6 +115,7 @@ button:hover {
   gap: 1rem;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 2fr 0.5fr;
+  justify-items: center;
   margin-left: 3rem;
   width: 100%;
 }

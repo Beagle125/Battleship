@@ -54,3 +54,17 @@ test("test setShip by setting a ship on something that is already occupied", () 
   ]);
   expect(retVal).toBeFalsy();
 });
+
+test("valid playerTurn move", () => {
+  const player1 = new Player(PlayerTypes.HUMAN);
+  const player2 = new Player(PlayerTypes.HUMAN);
+
+  expect(player1.playerTurn(player2, 0, 0)).toBeTruthy();
+});
+
+test("ivalid playerTurn move", () => {
+  const player1 = new Player(PlayerTypes.HUMAN);
+  const player2 = new Player(PlayerTypes.HUMAN);
+
+  expect(player1.playerTurn(player2, -9, 0)).toBeFalsy();
+});

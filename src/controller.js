@@ -1,9 +1,11 @@
 import { PlayerList } from "./model.js";
-import { renderStart, renderSelection } from "./display.js";
-import { humanPlanningEvent, computerPlanningEvent } from "./event.js";
+import { renderStart, renderGameplay, renderFooterMessage } from "./display.js";
+import {
+  humanPlanningEvent,
+  computerPlanningEvent,
+  playerTurnEvent,
+} from "./event.js";
 import { PlayerTypes } from "./types.js";
-
-let currPlayers;
 
 const startStage = () => {
   renderStart(
@@ -13,7 +15,7 @@ const startStage = () => {
 };
 
 const selectionStage = async (type) => {
-  currPlayers = new PlayerList(type);
+  let currPlayers = new PlayerList(type);
 
   const playerArr = new Array();
   playerArr.push(currPlayers.player1);
@@ -24,7 +26,31 @@ const selectionStage = async (type) => {
     else await computerPlanningEvent(player);
   }
 
-  startStage();
+  gameplayStage(currPlayers);
 };
 
-export { startStage, selectionStage, currPlayers };
+const gameplayStage = async (currPlayers) => {
+  const { player1Grid, player2Grid } = renderGameplay(
+    document.querySelector("#mainContainer"),
+  );
+
+  const player1 = { data: currPlayers[0], grid: player1Grid };
+  const player2 = { data: currPlayers[1], grid: player2Grid };
+
+  let isGameOver = false;
+  let currPlayerIndex = 0;
+
+  while (!isGameOver) {
+    let currPlayer;
+    if (currPlayerIndex === 1) currPlayer = player1;
+    else currPlayer = player2;
+
+    renderFooterMessage(`Player ${currPlayerIndex + 1}'s turn`);
+
+    await playerTurnEvent(currPlayer.data, currPlayer.grid);
+
+    currPlayerIndex = (currPlayerIndex + 1) % 2;
+  }
+};
+
+export { startStage, selectionStage, gameplayStage };
