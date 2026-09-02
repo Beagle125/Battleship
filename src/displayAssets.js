@@ -26,6 +26,7 @@ const ClickableTile = class {
     this.#col = col;
 
     this.#DOMNode.classList.add("clickableTile");
+    this.#DOMNode.classList.add(`${row}-${col}`);
   }
 
   get DOMNode() {

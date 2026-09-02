@@ -50,7 +50,6 @@ const loadComputerPlayersEvent = async () => {
 
 const humanPlanningEvent = (player) => {
   const verticalAxis = true;
-  let currShip;
   let shipNum = 0;
 
   const grid = renderSelection(
