@@ -1,4 +1,5 @@
-import { Gameboard, Player, Types } from "../src/model.js";
+import { Gameboard, Player } from "../src/model.js";
+import { Types } from "../src/types.js";
 
 test("test the default values of a human player", () => {
   const player1 = new Player(Types.HUMAN);
