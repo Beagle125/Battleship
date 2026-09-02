@@ -112,8 +112,9 @@ button:hover {
   display: grid;
   flex: 1;
   gap: 1rem;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1.5fr;
   grid-template-rows: 2fr 0.5fr;
+  margin-left: 3rem;
   width: 100%;
 }
 
@@ -123,10 +124,17 @@ button:hover {
   margin-left: 1rem;
 }
 
+.buttonSelectionContainer {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
 /*Grid styles*/
 .gridBackground {
   display: grid;
-  border: 2px solid var(--utilityWhite);
+  border: 3px solid var(--utilityWhite);
 }
 
 .rowTiles {
@@ -136,5 +144,5 @@ button:hover {
 
 .clickableTile {
   background-color: var(--backgroundBlue);
-  border: 2px solid var(--utilityWhite);
+  border: 3px solid var(--utilityWhite);
 }

@@ -76,7 +76,25 @@ const renderSelection = (header, mainContainer) => {
   mainContainer.classList.replace("start", "gameplay");
 
   const grid = new Grid();
+
+  const buttonsDiv = document.createElement("div");
+  buttonsDiv.classList.add("buttonSelectionContainer");
+  const rotateBtn = new Button("simpleBtn", "Rotate", () =>
+    console.log("to rotate"),
+  );
+  const randomizeBtn = new Button("simpleBtn", "Randomize", () =>
+    console.log("to randomize"),
+  );
+  const finalizeBtn = new Button("criticalBtn", "Finalize", () => {
+    console.log("to finalize");
+  });
+
+  buttonsDiv.appendChild(rotateBtn.DOMNode);
+  buttonsDiv.appendChild(randomizeBtn.DOMNode);
+  buttonsDiv.appendChild(finalizeBtn.DOMNode);
+
   mainContainer.appendChild(grid.DOMNode);
+  mainContainer.appendChild(buttonsDiv);
 
   return grid;
 };
