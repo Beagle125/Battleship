@@ -71,8 +71,9 @@ const positionShips = (gridTiles, tile, verticalAxis, ship) => {
 };
 
 const humanPlanningEvent = (player) => {
-  const verticalAxis = true;
+  let verticalAxis = true;
   let shipNum = 0;
+  const maxShips = 5;
 
   const grid = renderSelection(
     document.querySelector("#header"),
@@ -88,6 +89,7 @@ const humanPlanningEvent = (player) => {
   gridTiles.forEach((tile) => {
     // inputting ships
     tile.DOMNode.addEventListener("click", () => {
+      if (shipNum === maxShips) return;
       const { coords, placements } = positionShips(
         gridTiles,
         tile,
@@ -98,12 +100,15 @@ const humanPlanningEvent = (player) => {
       if (player.setShip(fleet[shipNum], coords)) {
         shipNum += 1;
         renderPlacements(placements);
-        renderFooterMessage(`Selecting the ${fleet[shipNum].name}`);
+        if (shipNum < maxShips)
+          renderFooterMessage(`Selecting the ${fleet[shipNum].name}`);
+        else renderFooterMessage("Ready for battle!");
       }
     });
 
     // hovering over tiles
     tile.DOMNode.addEventListener("mouseenter", () => {
+      if (shipNum === maxShips) return;
       const placements = positionShips(
         gridTiles,
         tile,
@@ -116,6 +121,7 @@ const humanPlanningEvent = (player) => {
 
     // unhovering over tiles
     tile.DOMNode.addEventListener("mouseleave", () => {
+      if (shipNum === maxShips) return;
       const placements = positionShips(
         gridTiles,
         tile,
@@ -125,6 +131,15 @@ const humanPlanningEvent = (player) => {
 
       renderUnhoverPlacements(placements);
     });
+  });
+
+  // button events
+  document.addEventListener("click", (event) => {
+    const targetRotate = event.target.closest(".rotateBtn");
+
+    if (targetRotate) {
+      verticalAxis = rotateEvent(verticalAxis);
+    }
   });
 };
 
@@ -145,8 +160,8 @@ const computerPlanningEvent = (player) => {
   });
 };
 
-const rotateEvent = () => {
-  console.log("rotate");
+const rotateEvent = (isVertical) => {
+  return !isVertical;
 };
 
 const randomizeEvent = () => {

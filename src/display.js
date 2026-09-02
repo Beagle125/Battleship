@@ -37,9 +37,9 @@ const renderSelection = (header, mainContainer) => {
 
   const buttonsDiv = document.createElement("div");
   buttonsDiv.classList.add("buttonSelectionContainer");
-  const rotateBtn = new Button("Rotate", "simpleBtn");
-  const randomizeBtn = new Button("Randomize", "simpleBtn");
-  const finalizeBtn = new Button("Finalize", "criticalBtn");
+  const rotateBtn = new Button("Rotate", "simpleBtn", "rotateBtn");
+  const randomizeBtn = new Button("Randomize", "simpleBtn", "randomizeBtn");
+  const finalizeBtn = new Button("Finalize", "criticalBtn", "finalizeBtn");
 
   buttonsDiv.appendChild(rotateBtn.DOMNode);
   buttonsDiv.appendChild(randomizeBtn.DOMNode);
