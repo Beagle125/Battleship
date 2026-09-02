@@ -7,6 +7,9 @@ import {
   renderHoverPlacements,
   renderUnhoverPlacements,
   renderComputerLoader,
+  renderHoverTile,
+  renderUnhoverTile,
+  renderTile,
 } from "./display.js";
 import { PlayerTypes } from "./types.js";
 import { Fleet } from "./model.js";
@@ -215,25 +218,40 @@ const playerTurnEvent = (opponent, data, grid) =>
     const gridArr = grid.clickableTilesArr;
 
     // handler function
-    const handler = (event) => {
-      let targetTile = event.target.closest(".clickableTile");
+    const handlerClick = (event) => {
+      // find the appropriate tile
+      const targetTile = event.target.closest(".clickableTile");
+      targetTile.classList.remove("noShip");
+      let currTile = gridArr.find((tile) => tile.DOMNode.id === targetTile.id);
 
-      if (targetTile) {
-        // find the appropriate tile
-        const currTile = gridArr.find(
-          (tile) => tile.DOMNode.id === targetTile.id,
-        );
+      console.log(event.target);
 
-        const retVal = data.playerTurn(opponent, currTile.row, currTile.col);
+      const retVal = data.playerTurn(opponent, currTile.row, currTile.col);
 
-        if (retVal) {
-          document.removeEventListener("click", handler);
-          resolve(true);
-        }
+      if (retVal) {
+        renderTile(targetTile, data, currTile.row, currTile.col);
+        gridArr.forEach((tile) => {
+          tile.DOMNode.removeEventListener("click", handlerClick);
+          tile.DOMNode.removeEventListener("mouseenter", handlerHover);
+          tile.DOMNode.removeEventListener("mouseleave", handlerLeave);
+        });
+        resolve(true);
       }
     };
 
-    document.addEventListener("click", handler);
+    const handlerHover = (event) => {
+      renderHoverTile(event.target);
+    };
+
+    const handlerLeave = (event) => {
+      renderUnhoverTile(event.target);
+    };
+
+    gridArr.forEach((tile) => {
+      tile.DOMNode.addEventListener("click", handlerClick);
+      tile.DOMNode.addEventListener("mouseenter", handlerHover);
+      tile.DOMNode.addEventListener("mouseleave", handlerLeave);
+    });
   });
 
 export {

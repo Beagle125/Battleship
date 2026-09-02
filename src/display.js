@@ -112,6 +112,31 @@ const renderUnhoverPlacements = (tiles) => {
   }
 };
 
+const renderTile = (tile, data, row, col) => {
+  let mark = document.createElement("img");
+  mark.classList.add("placementTile");
+
+  if (data.gameboard.grid[row][col].isShip) mark.src = hit;
+  else mark.src = miss;
+
+  tile.appendChild(mark);
+};
+
+const renderHoverTile = (tile) => {
+  if (!tile) return;
+
+  if (!tile.classList.contains("noShip")) return;
+  const selectionTile = document.createElement("img");
+  selectionTile.src = miss;
+  selectionTile.classList.add("placementTile");
+  selectionTile.classList.add("faded");
+  tile.appendChild(selectionTile);
+};
+
+const renderUnhoverTile = (tile) => {
+  if (tile.classList.contains("noShip")) tile.replaceChildren();
+};
+
 const renderGameplay = (mainContainer) => {
   mainContainer.replaceChildren();
 
@@ -133,4 +158,7 @@ export {
   renderUnhoverPlacements,
   renderComputerLoader,
   renderGameplay,
+  renderHoverTile,
+  renderUnhoverTile,
+  renderTile,
 };

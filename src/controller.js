@@ -44,20 +44,19 @@ const gameplayStage = async (currPlayers) => {
       await playerTurnEvent(
         currPlayers[(currPlayerIndex + 1) % 2],
         currPlayers[currPlayerIndex],
-        player1Grid,
+        player2Grid,
       );
     } else {
       await playerTurnEvent(
         currPlayers[(currPlayerIndex + 1) % 2],
         currPlayers[currPlayerIndex],
-        player2Grid,
+        player1Grid,
       );
     }
 
     currPlayerIndex = (currPlayerIndex + 1) % 2;
 
     isGameOver = currPlayers[0].isDefeated() || currPlayers[1].isDefeated();
-    console.log(isGameOver + ":" + currPlayerIndex);
   }
 };
 
