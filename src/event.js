@@ -91,55 +91,57 @@ const humanPlanningEvent = (player) =>
 
     renderFooterMessage(`Selecting the ${fleet[shipNum].name}`);
 
-    gridTiles.forEach((tile) => {
-      // inputting ships
-      tile.DOMNode.addEventListener("click", () => {
-        if (shipNum === fleet.length) return;
-        const { coords, placements } = positionShips(
-          gridTiles,
-          tile,
-          verticalAxis,
-          fleet[shipNum],
-        );
+    const clickHandler = (event) => {
+      if (shipNum === fleet.length) return;
+      const tileTarget = event.target.closest(".clickableTile");
+      const tile = gridTiles.find((tile) => tile.DOMNode.id === tileTarget.id);
+      const { coords, placements } = positionShips(
+        gridTiles,
+        tile,
+        verticalAxis,
+        fleet[shipNum],
+      );
 
-        if (player.setShip(fleet[shipNum], coords)) {
-          shipNum += 1;
-          renderPlacements(placements);
-          if (shipNum < fleet.length)
-            renderFooterMessage(`Selecting the ${fleet[shipNum].name}`);
-          else renderFooterMessage("Ready for battle!");
-        }
-      });
+      if (player.setShip(fleet[shipNum], coords)) {
+        shipNum += 1;
+        renderPlacements(placements);
+        if (shipNum < fleet.length)
+          renderFooterMessage(`Selecting the ${fleet[shipNum].name}`);
+        else renderFooterMessage("Ready for battle!");
+      }
+    };
 
-      // hovering over tiles
-      tile.DOMNode.addEventListener("mouseenter", () => {
-        if (shipNum === fleet.length) return;
-        const placements = positionShips(
-          gridTiles,
-          tile,
-          verticalAxis,
-          fleet[shipNum],
-        ).placements;
+    const hoverHandler = (event) => {
+      if (shipNum === fleet.length) return;
+      const tile = gridTiles.find(
+        (tile) => tile.DOMNode.id === event.target.id,
+      );
+      const placements = positionShips(
+        gridTiles,
+        tile,
+        verticalAxis,
+        fleet[shipNum],
+      ).placements;
 
-        renderHoverPlacements(placements);
-      });
+      renderHoverPlacements(placements);
+    };
 
-      // unhovering over tiles
-      tile.DOMNode.addEventListener("mouseleave", () => {
-        if (shipNum === fleet.length) return;
-        const placements = positionShips(
-          gridTiles,
-          tile,
-          verticalAxis,
-          fleet[shipNum],
-        ).placements;
+    const leaveHandler = (event) => {
+      if (shipNum === fleet.length) return;
+      const tile = gridTiles.find(
+        (tile) => tile.DOMNode.id === event.target.id,
+      );
+      const placements = positionShips(
+        gridTiles,
+        tile,
+        verticalAxis,
+        fleet[shipNum],
+      ).placements;
 
-        renderUnhoverPlacements(placements);
-      });
-    });
+      renderUnhoverPlacements(placements);
+    };
 
-    // button events
-    document.addEventListener("click", async (event) => {
+    const buttonHandler = async (event) => {
       const targetRotate = event.target.closest(".rotateBtn");
       const targetRandomize = event.target.closest(".randomizeBtn");
       const targetFinalize = event.target.closest(".finalizeBtn");
@@ -155,10 +157,33 @@ const humanPlanningEvent = (player) =>
         renderFooterMessage("Ready for battle!");
       } else if (targetFinalize) {
         if (finalizeEvent(shipNum, fleet)) {
+          gridTiles.forEach((tile) => {
+            tile.DOMNode.removeEventListener("click", clickHandler);
+
+            tile.DOMNode.removeEventListener("mouseenter", hoverHandler);
+
+            tile.DOMNode.removeEventListener("mouseleave", leaveHandler);
+          });
+
+          document.removeEventListener("click", buttonHandler);
           resolve(true);
         }
       }
+    };
+
+    gridTiles.forEach((tile) => {
+      // inputting ships
+      tile.DOMNode.addEventListener("click", clickHandler);
+
+      // hovering over tiles
+      tile.DOMNode.addEventListener("mouseenter", hoverHandler);
+
+      // unhovering over tiles
+      tile.DOMNode.addEventListener("mouseleave", leaveHandler);
     });
+
+    // button events
+    document.addEventListener("click", buttonHandler);
   });
 
 const computerPlanningEvent = (player) =>
