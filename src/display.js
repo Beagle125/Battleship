@@ -3,17 +3,7 @@ import logo from "../static/logo.svg";
 import miss from "../static/miss.svg";
 import placement from "../static/placement.svg";
 
-import { delay, renderLoad } from "./controller.js";
-
-const Button = (type, text, action) => {
-  const newButton = document.createElement("button");
-  newButton.classList.add(type);
-  newButton.textContent = text;
-
-  newButton.addEventListener("click", action);
-
-  return { newButton };
-};
+import { delay, Button } from "./displayAssets.js";
 
 const renderStart = (header, mainContainer) => {
   header.replaceChildren();
@@ -30,6 +20,34 @@ const renderStart = (header, mainContainer) => {
 
   mainContainer.appendChild(twoPlayerButton.newButton);
   mainContainer.appendChild(computerButton.newButton);
+};
+
+const renderLoad = async () => {
+  const mainContainer = document.querySelector("#mainContainer");
+  mainContainer.replaceChildren();
+
+  const loadMessage = document.createElement("p");
+  loadMessage.textContent = "Loading Fleet";
+  loadMessage.classList.add("loadingMessage");
+  mainContainer.appendChild(loadMessage);
+
+  const loadingIcon = document.createElement("div");
+  loadingIcon.classList.add("spinningIcon");
+  mainContainer.appendChild(loadingIcon);
+
+  await delay(2000);
+
+  renderSelection(document.querySelector("#header"), mainContainer);
+};
+
+const renderSelection = (header, mainContainer) => {
+  mainContainer.replaceChildren();
+
+  header.classList.replace("centered", "uncentered");
+
+  mainContainer.classList.replace("start", "gameplay");
+
+  const grid = document.createElement("div");
 };
 
 export { renderStart };
