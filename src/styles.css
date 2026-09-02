@@ -154,4 +154,14 @@ button:hover {
 .clickableTile {
   background-color: var(--backgroundBlue);
   border: 3px solid var(--utilityWhite);
+  position: relative;
+}
+
+.placementTile {
+  box-shadow: -5px 5px 12px black;
+  position: absolute;
+  scale: 0.8;
+  top: -10px;
+  left: -1px;
+  z-index: 1;
 }
