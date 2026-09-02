@@ -16,8 +16,8 @@ const renderStart = (header, mainContainer) => {
   header.appendChild(logoImg);
 
   mainContainer.classList.replace("gameplay", "start");
-  const twoPlayerButton = new Button("simpleBtn", "2 player");
-  const computerButton = new Button("simpleBtn", "computer");
+  const twoPlayerButton = new Button("2 player", "simpleBtn");
+  const computerButton = new Button("computer", "simpleBtn");
 
   twoPlayerButton.DOMNode.addEventListener("click", loadTwoPlayersEvent);
   computerButton.DOMNode.addEventListener("click", loadComputerPlayersEvent);
@@ -37,9 +37,9 @@ const renderSelection = (header, mainContainer) => {
 
   const buttonsDiv = document.createElement("div");
   buttonsDiv.classList.add("buttonSelectionContainer");
-  const rotateBtn = new Button("simpleBtn", "Rotate");
-  const randomizeBtn = new Button("simpleBtn", "Randomize");
-  const finalizeBtn = new Button("criticalBtn", "Finalize");
+  const rotateBtn = new Button("Rotate", "simpleBtn");
+  const randomizeBtn = new Button("Randomize", "simpleBtn");
+  const finalizeBtn = new Button("Finalize", "criticalBtn");
 
   buttonsDiv.appendChild(rotateBtn.DOMNode);
   buttonsDiv.appendChild(randomizeBtn.DOMNode);
