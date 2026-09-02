@@ -1,7 +1,8 @@
 import { startStage, selectionStage } from "./controller.js";
 import { delay } from "./displayAssets.js";
-import { renderSelection } from "./display.js";
+import { renderSelection, renderFooterMessage } from "./display.js";
 import { PlayerTypes } from "./types.js";
+import { Fleet } from "./model.js";
 
 const loadStartEvent = () => {
   startStage();
@@ -43,21 +44,28 @@ const loadComputerPlayersEvent = async () => {
   selectionStage(PlayerTypes.COMPUTER);
 };
 
+const selectionTileEvent = (player, gridTiles) => {
+  gridTiles.forEach((tile) => {
+    tile.DOMNode.addEventListener("click", () => {
+      console.log("idk");
+    });
+  });
+};
+
 const humanPlanningEvent = (player) => {
+  const verticalAxis = true;
   const grid = renderSelection(
     document.querySelector("#header"),
     mainContainer,
   );
-
   grid.DOMNode.classList.add("selectionGrid");
 
-  const grid1Tiles = grid.clickableTilesArr;
+  const gridTiles = grid.clickableTilesArr;
+  selectionTileEvent(player, gridTiles);
 
-  grid1Tiles.forEach((tile) => {
-    tile.DOMNode.addEventListener("click", () => {
-      console.log("Clicked!");
-    });
-  });
+  const fleet = Fleet();
+
+  renderFooterMessage(`Selecting the ${fleet[0].name}`);
 };
 
 const computerPlanningEvent = (player) => {
@@ -68,9 +76,9 @@ const computerPlanningEvent = (player) => {
 
   grid.DOMNode.classList.add("selectionGrid");
 
-  const grid1Tiles = grid.clickableTilesArr;
+  const gridTiles = grid.clickableTilesArr;
 
-  grid1Tiles.forEach((tile) => {
+  gridTiles.forEach((tile) => {
     tile.DOMNode.addEventListener("click", (event) => {
       console.log("Clicked!");
     });

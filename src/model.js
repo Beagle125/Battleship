@@ -153,20 +153,16 @@ const PlayerList = class {
   }
 };
 
-const Fleet = class {
-  carrier;
-  battleship;
-  destroyer;
-  submarine;
-  patrol;
+const Fleet = () => {
+  const fleet = [
+    new Ship(5, "Carrier"),
+    new Ship(4, "Battleship"),
+    new Ship(3, "Destroyer"),
+    new Ship(3, "Submarine"),
+    new Ship(2, "Patrol"),
+  ];
 
-  constructor() {
-    this.carrier = new Ship(5, "Carrier");
-    this.battleship = new Ship(4, "Battleship");
-    this.destroyer = new Ship(3, "Destroyer");
-    this.submarine = new Ship(3, "Submarine");
-    this.patrol = new Ship(2, "Patrol");
-  }
+  return fleet;
 };
 
 export { Tile, Ship, Gameboard, Player, PlayerList, Fleet };

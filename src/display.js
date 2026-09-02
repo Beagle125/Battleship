@@ -57,4 +57,14 @@ const renderSelection = (header, mainContainer) => {
   return grid;
 };
 
-export { renderStart, renderSelection };
+const renderFooterMessage = (message) => {
+  const mainContainer = document.querySelector("#mainContainer");
+
+  const footer = document.createElement("p");
+  footer.classList.add("footerMessage");
+  footer.textContent = message;
+
+  mainContainer.appendChild(footer);
+};
+
+export { renderStart, renderSelection, renderFooterMessage };
