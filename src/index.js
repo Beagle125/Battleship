@@ -1,4 +1,5 @@
 import "./styles.css";
-import { loadStartEvent } from "./event.js";
+import { loadStartEvent, loadTwoPlayersEvent } from "./event.js";
 
 loadStartEvent();
+loadTwoPlayersEvent();

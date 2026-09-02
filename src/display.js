@@ -66,10 +66,43 @@ const renderPlacements = (tiles) => {
   for (const tile of tiles) {
     const placementTile = document.createElement("img");
     const node = tile.DOMNode;
+    node.classList.remove("noShip");
     placementTile.src = placement;
     placementTile.classList.add("placementTile");
     node.appendChild(placementTile);
   }
 };
 
-export { renderStart, renderSelection, renderFooterMessage, renderPlacements };
+const renderHoverPlacements = (tiles) => {
+  for (const tile of tiles) {
+    if (!tile) return;
+    const placementTile = document.createElement("img");
+    const node = tile.DOMNode;
+
+    if (!node.classList.contains("noShip")) break;
+    placementTile.src = placement;
+    placementTile.classList.add("placementTile");
+    placementTile.classList.add("faded");
+    node.appendChild(placementTile);
+  }
+};
+
+const renderUnhoverPlacements = (tiles) => {
+  for (const tile of tiles) {
+    if (!tile) return;
+    const placementTile = document.createElement("img");
+    const node = tile.DOMNode;
+
+    if (!node.classList.contains("noShip")) break;
+    node.replaceChildren();
+  }
+};
+
+export {
+  renderStart,
+  renderSelection,
+  renderFooterMessage,
+  renderPlacements,
+  renderHoverPlacements,
+  renderUnhoverPlacements,
+};

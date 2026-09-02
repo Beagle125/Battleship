@@ -4,6 +4,8 @@ import {
   renderSelection,
   renderFooterMessage,
   renderPlacements,
+  renderHoverPlacements,
+  renderUnhoverPlacements,
 } from "./display.js";
 import { PlayerTypes } from "./types.js";
 import { Fleet } from "./model.js";
@@ -48,6 +50,26 @@ const loadComputerPlayersEvent = async () => {
   selectionStage(PlayerTypes.COMPUTER);
 };
 
+const positionShips = (gridTiles, tile, verticalAxis, ship) => {
+  const coords = new Array();
+  const placements = new Array();
+
+  coords.push([tile.row, tile.col]);
+  for (let i = 1; i < ship.shipLength; i++) {
+    if (verticalAxis) coords.push([tile.row + i, tile.col]);
+    else coords.push([tile.row, tile.col - i]);
+  }
+
+  for (const coord of coords) {
+    const clickableTile = gridTiles.find(
+      (obj) => obj.row === coord[0] && obj.col === coord[1],
+    );
+    placements.push(clickableTile);
+  }
+
+  return { coords, placements };
+};
+
 const humanPlanningEvent = (player) => {
   const verticalAxis = true;
   let shipNum = 0;
@@ -64,29 +86,44 @@ const humanPlanningEvent = (player) => {
   renderFooterMessage(`Selecting the ${fleet[shipNum].name}`);
 
   gridTiles.forEach((tile) => {
+    // inputting ships
     tile.DOMNode.addEventListener("click", () => {
-      const coords = new Array();
-      const placements = new Array();
-      const ship = fleet[shipNum];
-      coords.push([tile.row, tile.col]);
+      const { coords, placements } = positionShips(
+        gridTiles,
+        tile,
+        verticalAxis,
+        fleet[shipNum],
+      );
 
-      for (let i = 1; i < ship.shipLength; i++) {
-        if (verticalAxis) coords.push([tile.row + i, tile.col]);
-        else coords.push([tile.row, tile.col - i]);
-      }
-
-      for (const coord of coords) {
-        const clickableTile = gridTiles.find(
-          (obj) => obj.row === coord[0] && obj.col === coord[1],
-        );
-        placements.push(clickableTile);
-      }
-
-      if (player.setShip(ship, coords)) {
+      if (player.setShip(fleet[shipNum], coords)) {
         shipNum += 1;
         renderPlacements(placements);
         renderFooterMessage(`Selecting the ${fleet[shipNum].name}`);
       }
+    });
+
+    // hovering over tiles
+    tile.DOMNode.addEventListener("mouseenter", () => {
+      const placements = positionShips(
+        gridTiles,
+        tile,
+        verticalAxis,
+        fleet[shipNum],
+      ).placements;
+
+      renderHoverPlacements(placements);
+    });
+
+    // unhovering over tiles
+    tile.DOMNode.addEventListener("mouseleave", () => {
+      const placements = positionShips(
+        gridTiles,
+        tile,
+        verticalAxis,
+        fleet[shipNum],
+      ).placements;
+
+      renderUnhoverPlacements(placements);
     });
   });
 };

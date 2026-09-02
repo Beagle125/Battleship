@@ -165,3 +165,7 @@ button:hover {
   left: -1px;
   z-index: 1;
 }
+
+.placementTile.faded {
+  opacity: 0.5;
+}
