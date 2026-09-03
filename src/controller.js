@@ -5,6 +5,7 @@ import {
   humanPlanningEvent,
   computerPlanningEvent,
   playerTurnEvent,
+  computerTurnEvent,
   winningGameEvent,
   loadStartEvent,
 } from "./event.js";
@@ -35,22 +36,27 @@ const gameplayStage = async (currPlayers) => {
     document.querySelector("#mainContainer"),
   );
 
+  const gridArr = new Array();
+  gridArr.push(player1Grid);
+  gridArr.push(player2Grid);
+
   let isGameOver = false;
   let currPlayerIndex = 0;
 
   while (!isGameOver) {
     renderFooterMessage(`Player ${currPlayerIndex + 1}'s turn`);
-    if (currPlayerIndex === 0) {
+
+    if (currPlayers[currPlayerIndex].type === PlayerTypes.HUMAN) {
       await playerTurnEvent(
         currPlayers[(currPlayerIndex + 1) % 2],
         currPlayers[currPlayerIndex],
-        player2Grid,
+        gridArr[(currPlayerIndex + 1) % 2],
       );
     } else {
-      await playerTurnEvent(
+      await computerTurnEvent(
         currPlayers[(currPlayerIndex + 1) % 2],
         currPlayers[currPlayerIndex],
-        player1Grid,
+        gridArr[(currPlayerIndex + 1) % 2],
       );
     }
 

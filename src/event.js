@@ -211,7 +211,7 @@ const randomizeEvent = async (player, gridTiles, shipNum, fleet) => {
     if (Math.floor(Math.random() * 2)) verticalAxis = rotateEvent(verticalAxis);
 
     const filteredTiles = gridTiles.filter((tile) =>
-      tile.DOMNode.classList.contains("noShip"),
+      tile.DOMNode.classList.contains("noHit"),
     );
     let isValid = false;
 
@@ -246,7 +246,7 @@ const playerTurnEvent = (opponent, player, grid) =>
     const handlerClick = (event) => {
       // find the appropriate tile
       const targetTile = event.target.closest(".clickableTile");
-      targetTile.classList.remove("noShip");
+      targetTile.classList.remove("noHit");
       let currTile = gridArr.find((tile) => tile.DOMNode.id === targetTile.id);
 
       const retVal = player.playerTurn(opponent, currTile.row, currTile.col);
@@ -277,6 +277,24 @@ const playerTurnEvent = (opponent, player, grid) =>
     });
   });
 
+const computerTurnEvent = (opponent, player, grid) =>
+  new Promise((resolve) => {
+    const clickableTiles = grid.clickableTilesArr;
+    const filteredTiles = clickableTiles.filter((tile) =>
+      tile.DOMNode.classList.contains("noHit"),
+    );
+
+    // choose randomly
+    const chosenTile =
+      filteredTiles[Math.floor(Math.random() * filteredTiles.length)];
+
+    // make the move
+    player.playerTurn(opponent, chosenTile.row, chosenTile.col);
+    renderTile(chosenTile.DOMNode, opponent, chosenTile.row, chosenTile.col);
+    delay(1000);
+    resolve(true);
+  });
+
 const winningGameEvent = (currPlayerIndex) =>
   new Promise((resolve) => {
     const newGameBtn = document.createElement("button");
@@ -299,5 +317,6 @@ export {
   randomizeEvent,
   finalizeEvent,
   playerTurnEvent,
+  computerTurnEvent,
   winningGameEvent,
 };

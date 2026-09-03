@@ -82,7 +82,7 @@ const renderPlacements = (tiles) => {
   for (const tile of tiles) {
     const placementTile = document.createElement("img");
     const node = tile.DOMNode;
-    node.classList.remove("noShip");
+    node.classList.remove("noHit");
     placementTile.src = placement;
     placementTile.classList.add("placementTile");
     node.appendChild(placementTile);
@@ -95,7 +95,7 @@ const renderHoverPlacements = (tiles) => {
     const placementTile = document.createElement("img");
     const node = tile.DOMNode;
 
-    if (!node.classList.contains("noShip")) break;
+    if (!node.classList.contains("noHit")) break;
     placementTile.src = placement;
     placementTile.classList.add("placementTile");
     placementTile.classList.add("faded");
@@ -108,7 +108,7 @@ const renderUnhoverPlacements = (tiles) => {
     if (!tile) return;
     const node = tile.DOMNode;
 
-    if (!node.classList.contains("noShip")) break;
+    if (!node.classList.contains("noHit")) break;
     node.replaceChildren();
   }
 };
@@ -126,7 +126,7 @@ const renderTile = (tile, data, row, col) => {
 const renderHoverTile = (tile) => {
   if (!tile) return;
 
-  if (!tile.classList.contains("noShip")) return;
+  if (!tile.classList.contains("noHit")) return;
   const selectionTile = document.createElement("img");
   selectionTile.src = select;
   selectionTile.classList.add("placementTile");
@@ -135,7 +135,7 @@ const renderHoverTile = (tile) => {
 };
 
 const renderUnhoverTile = (tile) => {
-  if (tile.classList.contains("noShip")) tile.replaceChildren();
+  if (tile.classList.contains("noHit")) tile.replaceChildren();
 };
 
 const renderGameplay = (mainContainer) => {

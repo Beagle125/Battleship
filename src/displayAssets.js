@@ -24,7 +24,7 @@ const ClickableTile = class {
     this.#col = col;
 
     this.#DOMNode.classList.add("clickableTile");
-    this.#DOMNode.classList.add("noShip");
+    this.#DOMNode.classList.add("noHit");
     this.#DOMNode.id = `${row}-${col}`;
   }
 
