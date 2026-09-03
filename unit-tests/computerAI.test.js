@@ -105,3 +105,108 @@ test("Check evaluate choice status to go from two, to one, to random", () => {
   expect(myAI.referenceTile).toBeNull();
   expect(myAI.direction).toBeNull();
 });
+
+test("Test choosing a random tile", () => {
+  const myAI = new AI();
+  const filteredTiles = [{ tile: "ship" }, { tile: "space" }];
+
+  const tile = myAI.makeChoice(filteredTiles);
+
+  expect(filteredTiles).toContain(tile);
+});
+
+test("Test choosing in Type ONE so it looks to the left", () => {
+  const myAI = new AI();
+  const filteredTiles = [
+    { row: 0, col: 0 },
+    { row: 0, col: 1 },
+    { row: 0, col: 2 },
+  ];
+
+  myAI.evaluateChoice(true, filteredTiles[1]); // getting a hit
+  expect(myAI.direction).toEqual(0);
+
+  const tile = myAI.makeChoice(filteredTiles);
+
+  expect(tile).toMatchObject(filteredTiles[0]);
+});
+
+test("Test choosing in Type ONE whilst looking in all directions", () => {
+  const myAI = new AI();
+  const filteredTiles = [
+    { row: 1, col: 0 }, // left
+    { row: 1, col: 1 }, // center
+    { row: 1, col: 2 }, // right
+    { row: 0, col: 1 }, // up
+    { row: 2, col: 1 }, // down
+  ];
+
+  let tile;
+  myAI.evaluateChoice(true, filteredTiles[1]); // getting a hit
+  expect(myAI.direction).toEqual(0);
+
+  tile = myAI.makeChoice(filteredTiles);
+  expect(tile).toMatchObject(filteredTiles[0]); // left
+  myAI.evaluateChoice(false, tile); // getting a miss
+
+  tile = myAI.makeChoice(filteredTiles);
+  expect(tile).toMatchObject(filteredTiles[3]); // up
+  myAI.evaluateChoice(false, tile); // getting a miss
+
+  tile = myAI.makeChoice(filteredTiles);
+  expect(tile).toMatchObject(filteredTiles[2]); // right
+  myAI.evaluateChoice(false, tile); // getting a miss
+
+  tile = myAI.makeChoice(filteredTiles);
+  expect(tile).toMatchObject(filteredTiles[4]); //down
+  myAI.evaluateChoice(false, tile); // getting a miss
+});
+
+test("Test Type ONE, choosing in rotation", () => {
+  const myAI = new AI();
+  const filteredTiles = [
+    // { row: 1, col: 0 }, // no left
+    { row: 1, col: 1 }, // center
+    // { row: 1, col: 2 }, // right no down
+    // { row: 0, col: 1 }, // no up
+    { row: 2, col: 1 }, // down
+  ];
+
+  let tile;
+  myAI.evaluateChoice(true, filteredTiles[0]); // getting a hit
+  expect(myAI.direction).toEqual(0);
+
+  tile = myAI.makeChoice(filteredTiles);
+  expect(tile).toMatchObject(filteredTiles[1]); // checks down immediately
+});
+
+test("Test Type TWO, choosing in a streak", () => {
+  const myAI = new AI();
+  const filteredTiles = [
+    { row: 1, col: 5 }, // center
+    { row: 1, col: 4 },
+    { row: 1, col: 3 },
+    { row: 1, col: 2 },
+    { row: 1, col: 1 },
+  ];
+
+  let tile;
+  myAI.evaluateChoice(true, filteredTiles[0]); // getting a hit
+  expect(myAI.direction).toEqual(0);
+
+  tile = myAI.makeChoice(filteredTiles);
+  expect(tile).toMatchObject(filteredTiles[1]); // checks to the left
+  myAI.evaluateChoice(true, tile); // trigger type TWO
+  expect(myAI.status).toEqual(StatusTypes.TWO);
+
+  tile = myAI.makeChoice(filteredTiles);
+  expect(tile).toMatchObject(filteredTiles[2]); // checks to the left
+  myAI.evaluateChoice(true, tile); // continue attacking
+
+  tile = myAI.makeChoice(filteredTiles);
+  expect(tile).toMatchObject(filteredTiles[3]); // checks to the left
+  myAI.evaluateChoice(true, tile); // continue attacking
+
+  tile = myAI.makeChoice(filteredTiles);
+  expect(tile).toMatchObject(filteredTiles[4]); // checks to the left
+});

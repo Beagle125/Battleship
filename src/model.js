@@ -1,4 +1,3 @@
-import { cli } from "webpack";
 import { StatusTypes } from "./types.js";
 
 const Tile = class {
@@ -178,11 +177,13 @@ const AI = class {
   #status;
   #referenceTile;
   #direction;
+  #streak;
 
   constructor() {
     this.#status = StatusTypes.RANDOM;
     this.#referenceTile = null;
     this.#direction = null;
+    this.#streak = 0;
   }
 
   evaluateChoice(isSuccess, clickableTile) {
@@ -191,24 +192,99 @@ const AI = class {
         if (isSuccess) {
           this.#status = StatusTypes.ONE;
           this.#referenceTile = clickableTile;
+          this.#streak += 1;
           this.#direction = 0;
         }
         break;
       case StatusTypes.ONE:
-        if (isSuccess) this.#status = StatusTypes.TWO;
-        else if (!isSuccess && this.#direction < 3) this.#direction += 1;
-        else {
+        if (isSuccess) {
+          this.#status = StatusTypes.TWO;
+          this.#streak += 1;
+        } else if (!isSuccess && this.#direction < 3) {
+          this.#direction += 1;
+          this.#streak = 1;
+        } else {
           this.#status = StatusTypes.RANDOM;
           this.#referenceTile = null;
           this.#direction = null;
+          this.#streak = 0;
         }
         break;
       case StatusTypes.TWO:
         if (!isSuccess) {
           this.#status = StatusTypes.ONE;
           this.#direction += 1;
+          this.#streak = 0;
+        } else {
+          this.#streak += 1;
         }
         break;
+    }
+  }
+  makeChoice(filteredTiles) {
+    let chosenTile;
+
+    while (!chosenTile) {
+      switch (this.#status) {
+        case StatusTypes.RANDOM:
+          chosenTile =
+            filteredTiles[Math.floor(Math.random() * filteredTiles.length)];
+          break;
+        case StatusTypes.ONE:
+          const targetProperties = this.generateTargetTile();
+          chosenTile = filteredTiles.find(
+            (tile) =>
+              tile.row === targetProperties[0] &&
+              tile.col === targetProperties[1],
+          );
+
+          if (!chosenTile && this.#direction < 3) this.#direction += 1;
+          else if (!chosenTile && this.#direction >= 3) {
+            this.#status = StatusTypes.RANDOM;
+            this.#referenceTile = null;
+            this.#direction = null;
+          }
+          break;
+        case StatusTypes.TWO:
+          const targetPropertiesTwo = this.generateTargetTile();
+          chosenTile = filteredTiles.find(
+            (tile) =>
+              tile.row === targetPropertiesTwo[0] &&
+              tile.col === targetPropertiesTwo[1],
+          );
+
+          if (!chosenTile) {
+            this.#status = StatusTypes.ONE;
+            this.#streak = 1;
+          }
+      }
+    }
+
+    return chosenTile;
+  }
+
+  generateTargetTile() {
+    switch (this.#direction) {
+      case 0: // left
+        return [
+          this.#referenceTile.row,
+          this.#referenceTile.col - this.#streak,
+        ];
+      case 1: // up
+        return [
+          this.#referenceTile.row - this.#streak,
+          this.#referenceTile.col,
+        ];
+      case 2: // right
+        return [
+          this.#referenceTile.row,
+          this.#referenceTile.col + this.#streak,
+        ];
+      case 3: // down
+        return [
+          this.#referenceTile.row + this.#streak,
+          this.#referenceTile.col,
+        ];
     }
   }
 
