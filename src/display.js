@@ -114,6 +114,7 @@ const renderUnhoverPlacements = (tiles) => {
 };
 
 const renderTile = (tile, data, row, col) => {
+  tile.classList.remove("noHit");
   let mark = document.createElement("img");
   mark.classList.add("placementTile");
 

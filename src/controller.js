@@ -1,4 +1,4 @@
-import { Player } from "./model.js";
+import { Player, AI } from "./model.js";
 
 import { renderStart, renderGameplay, renderFooterMessage } from "./display.js";
 import {
@@ -32,6 +32,8 @@ const selectionStage = async (type) => {
 };
 
 const gameplayStage = async (currPlayers) => {
+  let computerProcessor = new AI();
+
   const { player1Grid, player2Grid } = renderGameplay(
     document.querySelector("#mainContainer"),
   );
@@ -54,6 +56,7 @@ const gameplayStage = async (currPlayers) => {
       );
     } else {
       await computerTurnEvent(
+        computerProcessor,
         currPlayers[(currPlayerIndex + 1) % 2],
         currPlayers[currPlayerIndex],
         gridArr[(currPlayerIndex + 1) % 2],

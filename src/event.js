@@ -246,7 +246,6 @@ const playerTurnEvent = (opponent, player, grid) =>
     const handlerClick = (event) => {
       // find the appropriate tile
       const targetTile = event.target.closest(".clickableTile");
-      targetTile.classList.remove("noHit");
       let currTile = gridArr.find((tile) => tile.DOMNode.id === targetTile.id);
 
       const retVal = player.playerTurn(opponent, currTile.row, currTile.col);
@@ -277,19 +276,22 @@ const playerTurnEvent = (opponent, player, grid) =>
     });
   });
 
-const computerTurnEvent = (opponent, player, grid) =>
+const computerTurnEvent = (computerProcessor, opponent, player, grid) =>
   new Promise((resolve) => {
     const clickableTiles = grid.clickableTilesArr;
     const filteredTiles = clickableTiles.filter((tile) =>
       tile.DOMNode.classList.contains("noHit"),
     );
 
-    // choose randomly
-    const chosenTile =
-      filteredTiles[Math.floor(Math.random() * filteredTiles.length)];
+    // choose
+    const chosenTile = computerProcessor.makeChoice(filteredTiles);
 
     // make the move
     player.playerTurn(opponent, chosenTile.row, chosenTile.col);
+    computerProcessor.evaluateChoice(
+      opponent.gameboard.grid[chosenTile.row][chosenTile.col].isShip,
+      chosenTile,
+    );
     renderTile(chosenTile.DOMNode, opponent, chosenTile.row, chosenTile.col);
     delay(1000);
     resolve(true);

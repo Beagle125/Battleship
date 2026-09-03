@@ -183,7 +183,7 @@ const AI = class {
     this.#status = StatusTypes.RANDOM;
     this.#referenceTile = null;
     this.#direction = null;
-    this.#streak = 0;
+    this.#streak = 1;
   }
 
   evaluateChoice(isSuccess, clickableTile) {
@@ -192,7 +192,7 @@ const AI = class {
         if (isSuccess) {
           this.#status = StatusTypes.ONE;
           this.#referenceTile = clickableTile;
-          this.#streak += 1;
+          this.#streak = 1;
           this.#direction = 0;
         }
         break;
@@ -207,14 +207,18 @@ const AI = class {
           this.#status = StatusTypes.RANDOM;
           this.#referenceTile = null;
           this.#direction = null;
-          this.#streak = 0;
         }
         break;
       case StatusTypes.TWO:
-        if (!isSuccess) {
+        if (!isSuccess && this.#direction < 3) {
           this.#status = StatusTypes.ONE;
           this.#direction += 1;
-          this.#streak = 0;
+          this.#streak = 1;
+        } else if (!isSuccess && this.#direction >= 3) {
+          this.#status = StatusTypes.RANDOM;
+          this.#referenceTile = null;
+          this.#direction = null;
+          this.#streak = 1;
         } else {
           this.#streak += 1;
         }
@@ -222,9 +226,9 @@ const AI = class {
     }
   }
   makeChoice(filteredTiles) {
-    let chosenTile;
+    let chosenTile = null;
 
-    while (!chosenTile) {
+    while (chosenTile == null) {
       switch (this.#status) {
         case StatusTypes.RANDOM:
           chosenTile =
@@ -238,8 +242,8 @@ const AI = class {
               tile.col === targetProperties[1],
           );
 
-          if (!chosenTile && this.#direction < 3) this.#direction += 1;
-          else if (!chosenTile && this.#direction >= 3) {
+          if (chosenTile == null && this.#direction < 3) this.#direction += 1;
+          else if (chosenTile == null && this.#direction >= 3) {
             this.#status = StatusTypes.RANDOM;
             this.#referenceTile = null;
             this.#direction = null;
@@ -253,9 +257,15 @@ const AI = class {
               tile.col === targetPropertiesTwo[1],
           );
 
-          if (!chosenTile) {
+          if (chosenTile == null && this.#direction < 3) {
             this.#status = StatusTypes.ONE;
+            this.#direction += 1;
             this.#streak = 1;
+          } else if (chosenTile == null && this.#direction >= 3) {
+            this.#status = StatusTypes.RANDOM;
+            this.#referenceTile = null;
+            this.#direction = null;
+            this.#streak = 0;
           }
       }
     }
