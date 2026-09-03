@@ -3,4 +3,10 @@ const PlayerTypes = Object.freeze({
   COMPUTER: "COMPUTER",
 });
 
-export { PlayerTypes };
+const StatusTypes = Object.freeze({
+  RANDOM: "RANDOM",
+  ONE: "ONE",
+  TWO: "TWO",
+});
+
+export { PlayerTypes, StatusTypes };
