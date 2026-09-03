@@ -160,17 +160,18 @@ button:hover {
 }
 
 .clickableTile {
+  display: flex;
   background-color: var(--backgroundBlue);
   border: 3px solid var(--utilityWhite);
+  justify-content: center;
   position: relative;
 }
 
 .placementTile {
-  box-shadow: -5px 5px 12px black;
+  box-shadow: -6px 5px 12px black;
   position: absolute;
-  scale: 0.8;
-  top: -10px;
-  left: -1px;
+  height: 90%;
+  width: 90%;
   z-index: 1;
 }
 
