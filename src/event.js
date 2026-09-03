@@ -277,6 +277,18 @@ const playerTurnEvent = (opponent, player, grid) =>
     });
   });
 
+const winningGameEvent = (currPlayerIndex) =>
+  new Promise((resolve) => {
+    const newGameBtn = document.createElement("button");
+    newGameBtn.classList.add("simpleBtn");
+    newGameBtn.textContent = "New Game";
+    renderFooterMessage(`Player ${currPlayerIndex} is the winner!`, newGameBtn);
+
+    newGameBtn.addEventListener("click", () => {
+      resolve(true);
+    });
+  });
+
 export {
   loadStartEvent,
   loadTwoPlayersEvent,
@@ -287,4 +299,5 @@ export {
   randomizeEvent,
   finalizeEvent,
   playerTurnEvent,
+  winningGameEvent,
 };

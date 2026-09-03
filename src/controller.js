@@ -5,6 +5,8 @@ import {
   humanPlanningEvent,
   computerPlanningEvent,
   playerTurnEvent,
+  winningGameEvent,
+  loadStartEvent,
 } from "./event.js";
 import { PlayerTypes } from "./types.js";
 
@@ -36,7 +38,6 @@ const gameplayStage = async (currPlayers) => {
   let isGameOver = false;
   let currPlayerIndex = 0;
 
-  // TODO: Fix this
   while (!isGameOver) {
     renderFooterMessage(`Player ${currPlayerIndex + 1}'s turn`);
     if (currPlayerIndex === 0) {
@@ -56,9 +57,15 @@ const gameplayStage = async (currPlayers) => {
     currPlayerIndex = (currPlayerIndex + 1) % 2;
 
     isGameOver = currPlayers[0].isDefeated() || currPlayers[1].isDefeated();
-    console.log(isGameOver);
-    console.log(currPlayers);
   }
+
+  let winner;
+
+  if (currPlayers[0].isDefeated()) winner = 2;
+  else winner = 1;
+
+  await winningGameEvent(winner);
+  loadStartEvent();
 };
 
 export { startStage, selectionStage, gameplayStage };
