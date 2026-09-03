@@ -36,7 +36,7 @@ const gameplayStage = async (currPlayers) => {
   let isGameOver = false;
   let currPlayerIndex = 0;
 
-  // main game loop
+  // TODO: Fix this
   while (!isGameOver) {
     renderFooterMessage(`Player ${currPlayerIndex + 1}'s turn`);
     if (currPlayerIndex === 0) {
@@ -56,6 +56,8 @@ const gameplayStage = async (currPlayers) => {
     currPlayerIndex = (currPlayerIndex + 1) % 2;
 
     isGameOver = currPlayers[0].isDefeated() || currPlayers[1].isDefeated();
+    console.log(isGameOver);
+    console.log(currPlayers);
   }
 };
 

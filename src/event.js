@@ -238,7 +238,7 @@ const finalizeEvent = (shipNum, fleet) => {
   return shipNum === fleet.length;
 };
 
-const playerTurnEvent = (opponent, data, grid) =>
+const playerTurnEvent = (opponent, player, grid) =>
   new Promise((resolve) => {
     const gridArr = grid.clickableTilesArr;
 
@@ -249,12 +249,10 @@ const playerTurnEvent = (opponent, data, grid) =>
       targetTile.classList.remove("noShip");
       let currTile = gridArr.find((tile) => tile.DOMNode.id === targetTile.id);
 
-      console.log(event.target);
-
-      const retVal = data.playerTurn(opponent, currTile.row, currTile.col);
+      const retVal = player.playerTurn(opponent, currTile.row, currTile.col);
 
       if (retVal) {
-        renderTile(targetTile, data, currTile.row, currTile.col);
+        renderTile(targetTile, opponent, currTile.row, currTile.col);
         gridArr.forEach((tile) => {
           tile.DOMNode.removeEventListener("click", handlerClick);
           tile.DOMNode.removeEventListener("mouseenter", handlerHover);

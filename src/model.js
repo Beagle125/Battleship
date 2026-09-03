@@ -10,7 +10,7 @@ const Tile = class {
   markHit() {
     this.#isHit = true;
 
-    if (this.#referenceShip) this.referenceShip.hit();
+    if (this.#isShip) this.referenceShip.hit();
   }
 
   get isShip() {
