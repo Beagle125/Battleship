@@ -1,4 +1,5 @@
-import { PlayerTypes } from "./types.js";
+import { cli } from "webpack";
+import { StatusTypes } from "./types.js";
 
 const Tile = class {
   #isShip = false;
@@ -160,4 +161,68 @@ const Fleet = () => {
   return fleet;
 };
 
-export { Tile, Ship, Gameboard, Player, Fleet };
+const AI = class {
+  /* 
+    statuses
+  random choosing
+  
+  1 in a row hit
+    it will check the left first, then up, then right, then down.
+    Once it has exhausted all 4 directions, it will go back to random choosing
+  
+  2 in a row hit
+    it will keep going the same direction until hitting a miss, then it will go back 
+    to the previous starge (1 in a row hit)
+  */
+
+  #status;
+  #referenceTile;
+  #direction;
+
+  constructor() {
+    this.#status = StatusTypes.RANDOM;
+    this.#referenceTile = null;
+    this.#direction = null;
+  }
+
+  evaluateChoice(isSuccess, clickableTile) {
+    switch (this.#status) {
+      case StatusTypes.RANDOM:
+        if (isSuccess) {
+          this.#status = StatusTypes.ONE;
+          this.#referenceTile = clickableTile;
+          this.#direction = 0;
+        }
+        break;
+      case StatusTypes.ONE:
+        if (isSuccess) this.#status = StatusTypes.TWO;
+        else if (!isSuccess && this.#direction < 3) this.#direction += 1;
+        else {
+          this.#status = StatusTypes.RANDOM;
+          this.#referenceTile = null;
+          this.#direction = null;
+        }
+        break;
+      case StatusTypes.TWO:
+        if (!isSuccess) {
+          this.#status = StatusTypes.ONE;
+          this.#direction += 1;
+        }
+        break;
+    }
+  }
+
+  get status() {
+    return this.#status;
+  }
+
+  get referenceTile() {
+    return this.#referenceTile;
+  }
+
+  get direction() {
+    return this.#direction;
+  }
+};
+
+export { Tile, Ship, Gameboard, Player, Fleet, AI };
